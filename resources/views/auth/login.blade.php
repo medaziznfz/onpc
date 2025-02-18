@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
+<html lang="ar" dir="rtl" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
 
 <head>
     <meta charset="utf-8" />
-    <title>Sign In | Your Application</title>
+    <title>تسجيل الدخول | تطبيقك</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('assetslogin/images/favicon.ico') }}">
 
@@ -12,6 +12,40 @@
     <link href="{{ asset('assetslogin/css/icons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assetslogin/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assetslogin/css/custom.min.css') }}" rel="stylesheet">
+
+    <!-- Custom RTL CSS with JannaLT Font -->
+    <style>
+        /* Import JannaLT Font */
+        @font-face {
+            font-family: 'JannaLT';
+            src: url('{{ asset("assetslogin/fonts/JannaLT.woff2") }}') format('woff2'),
+                 url('{{ asset("assetslogin/fonts/JannaLT.woff") }}') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        /* Apply JannaLT globally */
+        body {
+            font-family: 'JannaLT', sans-serif;
+        }
+        
+        /* Align all form labels to the right in RTL */
+        html[dir="rtl"] .form-label {
+            text-align: right;
+        }
+        /* Align input placeholder text to the right in RTL */
+        html[dir="rtl"] input::placeholder {
+            text-align: right;
+        }
+        /* Adjust the password toggle icon position for RTL */
+        html[dir="rtl"] .password-addon {
+            right: auto !important;
+            left: 0 !important;
+        }
+        /* Adjust float for forgot password link */
+        html[dir="rtl"] .forgot-password {
+            float: left;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,20 +69,20 @@
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
                                     <a href="/" class="d-inline-block auth-logo">
-                                        <img src="{{ asset('assetslogin/images/logo-light.png') }}" alt="" height="20">
+                                        <img src="{{ asset('assetslogin/images/logo.png') }}" alt="" height="120">
                                     </a>
-                                    <h5 class="text-primary mt-3">Welcome Back!</h5>
+                                    <h5 class="text-primary mt-3">أهلاً بعودتك!</h5>
                                 </div>
 
-                                <form method="POST" action="{{ route('login') }}" class="needs-validation">
+                                <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate>
                                     @csrf
 
                                     <!-- Login (Email/CIN) -->
                                     <div class="mb-3">
-                                        <label for="login" class="form-label">Email or CIN <span class="text-danger">*</span></label>
+                                        <label for="login" class="form-label text-end">البريد الإلكتروني أو رقم الهوية <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('login') is-invalid @enderror" 
-                                            id="login" name="login" placeholder="Enter email or CIN"
-                                            value="{{ old('login') }}" required autofocus>
+                                            id="login" name="login" placeholder="أدخل البريد الإلكتروني أو رقم الهوية"
+                                            value="{{ old('login') }}" required autofocus dir="rtl">
                                         @error('login')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -56,13 +90,13 @@
 
                                     <!-- Password -->
                                     <div class="mb-3">
-                                        <div class="float-end">
-                                            <a href="{{ route('password.request') }}" class="text-muted">Forgot password?</a>
+                                        <div class="forgot-password">
+                                            <a href="{{ route('password.request') }}" class="text-muted">نسيت كلمة المرور؟</a>
                                         </div>
-                                        <label class="form-label">Password <span class="text-danger">*</span></label>
+                                        <label class="form-label text-end">كلمة المرور <span class="text-danger">*</span></label>
                                         <div class="position-relative auth-pass-inputgroup">
                                             <input type="password" class="form-control @error('password') is-invalid @enderror" 
-                                                name="password" placeholder="Enter password" required>
+                                                name="password" placeholder="أدخل كلمة المرور" required dir="rtl">
                                             <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                 type="button" id="password-addon">
                                                 <i class="ri-eye-fill align-middle"></i>
@@ -74,33 +108,22 @@
                                     </div>
 
                                     <!-- Remember Me -->
-                                    <div class="form-check">
+                                    <div class="form-check mb-3">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="remember">Remember me</label>
+                                        <label class="form-check-label text-end" for="remember">تذكرني</label>
                                     </div>
 
                                     <div class="mt-4">
-                                        <button class="btn btn-success w-100" type="submit">Sign In</button>
-                                    </div>
-
-                                    <!-- Social Login (optional) -->
-                                    <div class="mt-4 text-center">
-                                        <div class="signin-other-title">
-                                            <h5 class="fs-13 mb-4 title">Sign In with</h5>
-                                        </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary btn-icon"><i class="ri-facebook-fill fs-16"></i></button>
-                                            <button type="button" class="btn btn-danger btn-icon"><i class="ri-google-fill fs-16"></i></button>
-                                            <button type="button" class="btn btn-dark btn-icon"><i class="ri-github-fill fs-16"></i></button>
-                                        </div>
+                                        <button class="btn btn-success w-100" type="submit">تسجيل الدخول</button>
                                     </div>
                                 </form>
+                                <!-- Social Login Section Removed -->
                             </div>
                         </div>
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Don't have an account? 
-                                <a href="{{ route('register') }}" class="fw-semibold text-primary text-decoration-underline"> Sign Up</a>
+                            <p class="mb-0">ليس لديك حساب؟ 
+                                <a href="{{ route('register') }}" class="fw-semibold text-primary text-decoration-underline">سجّل حساب جديد</a>
                             </p>
                         </div>
                     </div>
@@ -114,7 +137,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center">
-                            <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Your Application</p>
+                            <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> تطبيقك</p>
                         </div>
                     </div>
                 </div>
@@ -128,4 +151,5 @@
     <script src="{{ asset('assetslogin/js/pages/particles.app.js') }}"></script>
     <script src="{{ asset('assetslogin/js/pages/password-addon.init.js') }}"></script>
 </body>
+
 </html>
