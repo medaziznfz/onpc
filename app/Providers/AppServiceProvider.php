@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\App;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,12 +16,15 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    
+
     /**
      * Bootstrap any application services.
      */
     public function boot(): void
     {
         //
+        App::setLocale('ar');
 
         // hedha ken e super adin aandou el haq yodkhel
         Gate::define('super-admin', function ($user) {

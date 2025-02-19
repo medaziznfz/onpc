@@ -9,33 +9,7 @@
         <ul class="navbar-nav">
           <!-- Notification Dropdown -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i data-feather="bell"></i>
-              <div class="indicator">
-                <div class="circle"></div>
-              </div>
-            </a>
-            <div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
-              <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
-                <p>6 إشعارات جديدة </p>
-                <a href="javascript:;" class="text-muted">امسح الكل </a>
-              </div>
-              <div class="p-1">
-                <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
-                  <div class="wd-30 ht-30 d-flex align-items-center justify-content-center bg-primary rounded-circle me-3">
-                    <i class="icon-sm text-white" data-feather="gift"></i>
-                  </div>
-                  <div class="flex-grow-1 me-2">
-                    <p> استلام طلب جديد</p>
-                    <p class="tx-12 text-muted">30 min ago</p>
-                  </div>
-                </a>
-                <!-- Additional notification items can be added here -->
-              </div>
-              <div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
-                <a href="javascript:;"> عرض الكل</a>
-              </div>
-            </div>
+              @include('partials.notifications')
           </li>
           <!-- Profile Dropdown -->
           <li class="nav-item dropdown">

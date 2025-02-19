@@ -72,6 +72,57 @@
   <script src="{{ asset('assets/js/dashboard-light.js') }}"></script>
   <!-- End custom js for this page -->
 
+  <script>
+    function markAsRead(notificationId) {
+        fetch(`/notifications/${notificationId}/mark-as-read`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        }).then(response => {
+            if (response.ok) {
+                // Remove the unread background using data attribute
+                const notificationElement = document.querySelector(`a[data-notification-id="${notificationId}"]`);
+                if (notificationElement) {
+                    notificationElement.classList.remove('bg-light');
+                }
+
+                // Update the notification count text
+                const countElement = document.querySelector('.px-3.py-2 p');
+                if (countElement) {
+                    const currentCount = parseInt(countElement.textContent.match(/\d+/)[0]);
+                    const newCount = currentCount - 1;
+                    countElement.textContent = `${newCount} New Notifications`;
+                }
+            }
+        });
+    }
+
+    function markAllAsRead() {
+        fetch('/notifications/mark-all-as-read', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        }).then(response => {
+            if (response.ok) {
+                // Remove all unread backgrounds
+                document.querySelectorAll('.dropdown-item.bg-light').forEach(element => {
+                    element.classList.remove('bg-light');
+                });
+
+                // Update the notification count text to zero
+                const countElement = document.querySelector('.px-3.py-2 p');
+                if (countElement) {
+                    countElement.textContent = '0 New Notifications';
+                }
+            }
+        });
+    }
+</script>
+
   <!-- Custom JS Section -->
   @yield('scripts')
 </body>

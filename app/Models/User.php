@@ -51,4 +51,15 @@ class User extends Authenticatable
             'gouver' => 'integer', // Cast 'gouver' to integer
         ];
     }
+
+    // app/Models/User.php
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class)->latest();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->notifications()->where('read', false);
+    }
 }
