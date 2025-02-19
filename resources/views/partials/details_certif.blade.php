@@ -1,5 +1,9 @@
-<div class="container my-5" dir="rtl">
-    <h1 class="text-center mb-4 mt-5 ">متابعة الطلب</h1>
+
+
+
+
+<div>
+    <h1 class="text-center mb-4 mt-2 ">متابعة الطلب</h1>
     
     @php
         $steps = [
@@ -75,13 +79,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+ </div>
    
 
 
 
 
-@push('scripts')
+
 <script>
 $(document).ready(function() {
     // Défilement fluide vers le contenu lors du changement d'onglet
@@ -100,4 +104,3 @@ $(document).ready(function() {
     $(window).resize(adjustContentHeight);
 });
 </script>
-@endpush

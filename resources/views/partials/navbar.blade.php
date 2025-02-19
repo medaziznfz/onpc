@@ -76,7 +76,7 @@
         
         <!-- hedha mte3 talab chhedet wiqaya -->
         <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="/prev" class="nav-link">
             <i class="link-icon" data-feather="file-text"></i>
             <span class="menu-title">شهادة وقاية</span>
           </a>
@@ -85,7 +85,7 @@
         <!-- hedha mte3 moutabe3et el mataleb -->
         @if(Auth::user()->role == 1 || Auth::user()->role == 2)
         <li class="nav-item">
-          <a class="nav-link" href="/">
+          <a class="nav-link" href="/requestprev">
             <i class="link-icon" data-feather="layers"></i>
             <span class="menu-title">متابعة المطالب</span>
           </a>
@@ -96,7 +96,7 @@
         <!-- hedha mte3 el user management -->
         @if(Auth::user()->role == 2)
         <li class="nav-item">
-          <a class="nav-link" href="/">
+          <a class="nav-link" href="/management">
             <i class="link-icon" data-feather="users"></i>
             <span class="menu-title">إدارة المستخدمين</span>
           </a>

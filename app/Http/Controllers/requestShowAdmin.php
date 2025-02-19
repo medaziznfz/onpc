@@ -32,13 +32,6 @@ class requestShowAdmin extends Controller
             // Get the filtered results
             $requests = $query->get();
             
-            NotificationHelper::notify(
-                userId: 1,
-                message: "sayeb!",
-                btnText: "View Order",
-                redirectUrl: "prev"
-            );
-            // Pass the results to the view
             return view('prevention.request', compact('requests'));
        
     }

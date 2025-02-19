@@ -1,6 +1,6 @@
 @extends('layouts.app', ['page_title' => 'متابعة طلبك']) 
 
-@section('content')
+@push('content')
     @php
         use App\Models\Document;
         use App\Models\Certificat;
@@ -133,9 +133,9 @@
             </div>
         </div>
     @endif
-@endsection
+@endpush
 
-@section('styles')
+@push('styles')
 <style>
 
     #afficher-certificat {
@@ -236,8 +236,8 @@
 }
 
 </style>
-@endsection
-@section('scripts')
+@enspush
+@push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // ----------- Code existant pour les onglets -----------
@@ -320,4 +320,4 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 </script>
-@endsection
+@endpush

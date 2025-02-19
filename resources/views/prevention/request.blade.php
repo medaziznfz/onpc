@@ -1,25 +1,17 @@
-@extends('layouts.app', ['page_title' => 'متابعة طلبك']) 
+@extends('layouts.app') 
 
-@section('styles')
+@push('styles')
 <!-- Sweet Alert css-->
 <link href="assetsnefzi/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 
-
-
-<!-- Icons Css -->
-<link href="assetsnefzi/css/icons.min.css" rel="stylesheet" type="text/css" />
-<!-- App Css-->
-<link href="assetsnefzi/css/app.min.css" rel="stylesheet" type="text/css" />
-<!-- custom Css-->
-<link href="assetsnefzi/css/custom.min.css" rel="stylesheet" type="text/css" />
 <style>
     .table .sort {
         padding-right: 1.5rem;
     }
 </style>
-@endsection
+@endpush
 
-@section('content')
+@push('content')
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -106,12 +98,10 @@
             </div>
             <!-- end row -->
 
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
 <!-- JAVASCRIPT -->
-<script src="assetsnefzi/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assetsnefzi/libs/simplebar/simplebar.min.js"></script>
 <script src="assetsnefzi/libs/node-waves/waves.min.js"></script>
 <script src="assetsnefzi/libs/feather-icons/feather.min.js"></script>
 <script src="assetsnefzi/js/pages/plugins/lord-icon-2.1.0.js"></script>
@@ -129,4 +119,4 @@
 
 <!-- Sweet Alerts js -->
 <script src="assetsnefzi/libs/sweetalert2/sweetalert2.min.js"></script>
-@endsection
+@endpush

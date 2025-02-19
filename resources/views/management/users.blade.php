@@ -4,12 +4,6 @@
 <!-- Sweet Alert css-->
 <link href="assetsnefzi/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 
-<!-- Icons Css -->
-<link href="assetsnefzi/css/icons.min.css" rel="stylesheet" type="text/css" />
-<!-- App Css-->
-<link href="assetsnefzi/css/app.min.css" rel="stylesheet" type="text/css" />
-<!-- custom Css-->
-<link href="assetsnefzi/css/custom.min.css" rel="stylesheet" type="text/css" />
 <style>
     .table .sort {
         padding-right: 1.5rem;
@@ -55,7 +49,7 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
-                                    <td class="customer_name">{{ $user->id }}</td>
+                                    <td class="customer_name">{{ $user->cin }}</td>
                                     <td class="email">{{ $user->name }}</td> 
                                     <td class="phone">
                                         @if($user->governorate_name)
@@ -153,8 +147,6 @@
 
 @push('scripts')
 <!-- JAVASCRIPT -->
-<script src="assetsnefzi/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assetsnefzi/libs/simplebar/simplebar.min.js"></script>
 <script src="assetsnefzi/libs/node-waves/waves.min.js"></script>
 <script src="assetsnefzi/libs/feather-icons/feather.min.js"></script>
 <script src="assetsnefzi/js/pages/plugins/lord-icon-2.1.0.js"></script>

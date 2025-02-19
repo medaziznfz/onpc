@@ -14,20 +14,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/custom/custom.css') }}">
   
 
-  <style>
 
-    @font-face {
-        font-family: 'Jannalt';
-        src: url('assets/fonts/jannaLT/JannaLTBold.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    body {
-        font-family: 'Jannalt', sans-serif;
-    }
-
-  </style>
 
   <!-- End fonts -->
   
