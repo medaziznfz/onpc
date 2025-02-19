@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
+<html lang="ar" dir="rtl" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
 
 <head>
     <meta charset="utf-8" />
-    <title>Sign Up | Your Application</title>
+    <title>إنشاء حساب | تطبيقك</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('assetslogin/images/favicon.ico') }}">
 
@@ -12,6 +12,35 @@
     <link href="{{ asset('assetslogin/css/icons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assetslogin/css/app.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assetslogin/css/custom.min.css') }}" rel="stylesheet">
+
+    <!-- Custom RTL CSS with JannaLT Font -->
+    <style>
+        /* Import JannaLT Font */
+        @font-face {
+            font-family: 'JannaLT';
+            src: url('{{ asset("assetslogin/fonts/JannaLT.woff2") }}') format('woff2'),
+                 url('{{ asset("assetslogin/fonts/JannaLT.woff") }}') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        /* Apply JannaLT globally */
+        body {
+            font-family: 'JannaLT', sans-serif;
+        }
+        /* Align all form labels to the right in RTL */
+        html[dir="rtl"] .form-label {
+            text-align: right;
+        }
+        /* Align input placeholder text to the right in RTL */
+        html[dir="rtl"] input::placeholder {
+            text-align: right;
+        }
+        /* Adjust the password toggle icon position for RTL */
+        html[dir="rtl"] .password-addon {
+            right: auto !important;
+            left: 0 !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -37,7 +66,7 @@
                                     <a href="/" class="d-inline-block auth-logo">
                                         <img src="{{ asset('assetslogin/images/logo-light.png') }}" alt="" height="20">
                                     </a>
-                                    <h5 class="text-primary mt-3">Create New Account</h5>
+                                    <h5 class="text-primary mt-3">إنشاء حساب جديد</h5>
                                 </div>
 
                                 <form method="POST" action="{{ route('register') }}" class="needs-validation" novalidate>
@@ -45,10 +74,10 @@
 
                                     <!-- Name -->
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                                        <label for="name" class="form-label text-end">الاسم <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                                            id="name" name="name" placeholder="Enter name" 
-                                            value="{{ old('name') }}" required>
+                                            id="name" name="name" placeholder="أدخل الاسم" 
+                                            value="{{ old('name') }}" required dir="rtl">
                                         @error('name')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -56,10 +85,10 @@
 
                                     <!-- Email -->
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                        <label for="email" class="form-label text-end">البريد الإلكتروني <span class="text-danger">*</span></label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                            id="email" name="email" placeholder="Enter email" 
-                                            value="{{ old('email') }}" required>
+                                            id="email" name="email" placeholder="أدخل البريد الإلكتروني" 
+                                            value="{{ old('email') }}" required dir="rtl">
                                         @error('email')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -67,10 +96,10 @@
 
                                     <!-- CIN -->
                                     <div class="mb-3">
-                                        <label for="cin" class="form-label">CIN <span class="text-danger">*</span></label>
+                                        <label for="cin" class="form-label text-end">رقم الهوية <span class="text-danger">*</span></label>
                                         <input type="number" class="form-control @error('cin') is-invalid @enderror" 
-                                            id="cin" name="cin" placeholder="Enter CIN" 
-                                            value="{{ old('cin') }}" required>
+                                            id="cin" name="cin" placeholder="دخل رقم الهوية" 
+                                            value="{{ old('cin') }}" required dir="rtl">
                                         @error('cin')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -78,11 +107,11 @@
 
                                     <!-- Password -->
                                     <div class="mb-3">
-                                        <label class="form-label">Password <span class="text-danger">*</span></label>
+                                        <label class="form-label text-end">كلمة المرور <span class="text-danger">*</span></label>
                                         <div class="position-relative auth-pass-inputgroup">
                                             <input type="password" class="form-control @error('password') is-invalid @enderror" 
-                                                name="password" placeholder="Enter password" 
-                                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                                                name="password" placeholder="أدخل كلمة المرور" 
+                                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required dir="rtl">
                                             <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                 type="button" id="password-addon">
                                                 <i class="ri-eye-fill align-middle"></i>
@@ -95,44 +124,32 @@
 
                                     <!-- Confirm Password -->
                                     <div class="mb-3">
-                                        <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                        <label class="form-label text-end">تأكيد كلمة المرور <span class="text-danger">*</span></label>
                                         <div class="position-relative auth-pass-inputgroup">
                                             <input type="password" class="form-control" 
-                                                name="password_confirmation" placeholder="Confirm password" required>
+                                                name="password_confirmation" placeholder="أكد كلمة المرور" required dir="rtl">
                                         </div>
                                     </div>
 
                                     <!-- Password Requirements -->
                                     <div id="password-contain" class="p-3 bg-light mb-2 rounded">
-                                        <h5 class="fs-13">Password must contain:</h5>
-                                        <p id="pass-length" class="invalid fs-12 mb-2">Minimum <b>8 characters</b></p>
-                                        <p id="pass-lower" class="invalid fs-12 mb-2">At <b>lowercase</b> letter (a-z)</p>
-                                        <p id="pass-upper" class="invalid fs-12 mb-2">At least <b>uppercase</b> letter (A-Z)</p>
-                                        <p id="pass-number" class="invalid fs-12 mb-0">A least <b>number</b> (0-9)</p>
+                                        <h5 class="fs-13">يجب أن تحتوي كلمة المرور على:</h5>
+                                        <p id="pass-length" class="invalid fs-12 mb-2">حد أدنى <b>8 أحرف</b></p>
+                                        <p id="pass-lower" class="invalid fs-12 mb-2">حرف صغير واحد على الأقل (a-z)</p>
+                                        <p id="pass-upper" class="invalid fs-12 mb-2">حرف كبير واحد على الأقل (A-Z)</p>
+                                        <p id="pass-number" class="invalid fs-12 mb-0">رقم واحد على الأقل (0-9)</p>
                                     </div>
 
                                     <div class="mt-4">
-                                        <button class="btn btn-success w-100" type="submit">Sign Up</button>
-                                    </div>
-
-                                    <!-- Social Login (optional) -->
-                                    <div class="mt-4 text-center">
-                                        <div class="signin-other-title">
-                                            <h5 class="fs-13 mb-4 title text-muted">Create account with</h5>
-                                        </div>
-                                        <div>
-                                            <button type="button" class="btn btn-primary btn-icon"><i class="ri-facebook-fill fs-16"></i></button>
-                                            <button type="button" class="btn btn-danger btn-icon"><i class="ri-google-fill fs-16"></i></button>
-                                            <button type="button" class="btn btn-dark btn-icon"><i class="ri-github-fill fs-16"></i></button>
-                                        </div>
+                                        <button class="btn btn-success w-100" type="submit">تسجيل</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Already have an account? 
-                                <a href="{{ route('login') }}" class="fw-semibold text-primary text-decoration-underline"> Sign In</a>
+                            <p class="mb-0">هل لديك حساب بالفعل؟ 
+                                <a href="{{ route('login') }}" class="fw-semibold text-primary text-decoration-underline">تسجيل الدخول</a>
                             </p>
                         </div>
                     </div>
@@ -146,7 +163,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center">
-                            <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Your Application</p>
+                            <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> تطبيقك</p>
                         </div>
                     </div>
                 </div>
@@ -160,4 +177,5 @@
     <script src="{{ asset('assetslogin/js/pages/particles.app.js') }}"></script>
     <script src="{{ asset('assetslogin/js/pages/passowrd-create.init.js') }}"></script>
 </body>
+
 </html>
