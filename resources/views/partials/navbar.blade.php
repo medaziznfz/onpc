@@ -4,7 +4,7 @@
     <div class="container">
       <div class="navbar-content">
         <a href="#" class="navbar-brand">
-        للحماية المدنية<span>الديوان الوطني</span>
+        ل<span>اطني</span>
         </a>
         <ul class="navbar-nav">
           <!-- Notification Dropdown -->
@@ -68,7 +68,7 @@
       <ul class="nav page-navigation">
         <li class="nav-item">
           <a class="nav-link" href="{{ route('dashboard') }}">
-            <i class="link-icon" data-feather="box"></i>
+            <i class="link-icon" data-feather="slack"></i>
             <span class="menu-title">الرئيسية</span>
           </a>
         </li>
@@ -77,34 +77,18 @@
         <!-- hedha mte3 talab chhedet wiqaya -->
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="link-icon" data-feather="smile"></i>
+            <i class="link-icon" data-feather="file-text"></i>
             <span class="menu-title">شهادة وقاية</span>
-            <i class="link-arrow"></i>
           </a>
-          <div class="submenu">
-            <ul class="submenu-item">
-              <li class="nav-item"><a class="nav-link" href="pages/icons/feather-icons.html">Feather Icons</a></li>
-              <li class="nav-item"><a class="nav-link" href="pages/icons/flag-icons.html">Flag Icons</a></li>
-              <li class="nav-item"><a class="nav-link" href="pages/icons/mdi-icons.html">Mdi Icons</a></li>
-            </ul>
-          </div>
         </li>
 
         <!-- hedha mte3 moutabe3et el mataleb -->
         @if(Auth::user()->role == 1 || Auth::user()->role == 2)
         <li class="nav-item">
           <a class="nav-link" href="/">
-            <i class="link-icon" data-feather="shield"></i>
+            <i class="link-icon" data-feather="layers"></i>
             <span class="menu-title">متابعة المطالب</span>
-            <i class="link-arrow"></i>
           </a>
-          <div class="submenu">
-            <ul class="submenu-item">
-              <li class="nav-item"><a class="nav-link" href="pages/icons/feather-icons.html">Feather Icons</a></li>
-              <li class="nav-item"><a class="nav-link" href="pages/icons/flag-icons.html">Flag Icons</a></li>
-              <li class="nav-item"><a class="nav-link" href="pages/icons/mdi-icons.html">Mdi Icons</a></li>
-            </ul>
-          </div>
         </li>
         @endif
 
@@ -113,17 +97,9 @@
         @if(Auth::user()->role == 2)
         <li class="nav-item">
           <a class="nav-link" href="/">
-            <i class="link-icon" data-feather="shield"></i>
+            <i class="link-icon" data-feather="users"></i>
             <span class="menu-title">إدارة المستخدمين</span>
-            <i class="link-arrow"></i>
           </a>
-          <div class="submenu">
-            <ul class="submenu-item">
-              <li class="nav-item"><a class="nav-link" href="pages/icons/feather-icons.html">Feather Icons</a></li>
-              <li class="nav-item"><a class="nav-link" href="pages/icons/flag-icons.html">Flag Icons</a></li>
-              <li class="nav-item"><a class="nav-link" href="pages/icons/mdi-icons.html">Mdi Icons</a></li>
-            </ul>
-          </div>
         </li>
         @endif
 

@@ -4,17 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
-  <meta name="author" content="NobleUI">
-  <meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+  <meta name="description" content="ONPC app">
+  <meta name="author" content="onpc">
+
 
   <title>NobleUI - HTML Bootstrap 5 Admin Dashboard Template</title>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('assets/css/custom/custom.css') }}">
+  
+
+  <style>
+
+    @font-face {
+        font-family: 'Jannalt';
+        src: url('assets/fonts/jannaLT/JannaLTBold.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    body {
+        font-family: 'Jannalt', sans-serif;
+    }
+
+  </style>
+
   <!-- End fonts -->
+  
+  
 
   <!-- core:css -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/core/core.css') }}">
@@ -34,7 +51,7 @@
   <!-- End layout styles -->
 
   <!-- Custom CSS Section -->
-  @yield('styles')
+  @stack('styles')
 
   <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
 </head>
@@ -46,7 +63,7 @@
 
     <div class="page-wrapper">
       <div class="page-content">
-        @yield('content')
+        @stack('content')
       </div>
 
       {{-- Include the Footer Partial --}}
@@ -118,12 +135,17 @@
                 if (countElement) {
                     countElement.textContent = '0 New Notifications';
                 }
+
+                // Reload the page
+                window.location.reload();
             }
         });
     }
 </script>
 
-  <!-- Custom JS Section -->
-  @yield('scripts')
+<!-- Custom JS Section -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@stack('scripts')
+
 </body>
 </html>

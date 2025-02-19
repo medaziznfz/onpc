@@ -9,8 +9,8 @@
     </a>
     <div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
         <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
-            <p>{{ auth()->user()->unreadNotifications->count() }} New Notifications</p>
-            <a href="javascript:;" class="text-muted" onclick="markAllAsRead()">Clear all</a>
+            <p>{{ auth()->user()->unreadNotifications->count() }} إشعارات جديدة</p>
+            <a href="javascript:;" class="text-muted" onclick="markAllAsRead()">قرأته</a>
         </div>
         <div class="p-1">
             @foreach(auth()->user()->notifications->take(4) as $notification)
@@ -30,7 +30,7 @@
             @endforeach
         </div>
         <div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
-            <a href="{{ route('notifications.index') }}">View all</a>
+            <a href="{{ route('notifications.index') }}">عرض الكل</a>
         </div>
     </div>
 </li>

@@ -46,7 +46,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'cin' => 'integer',  // Cast 'cin' to integer
+            'cin' => 'string',  // Cast 'cin' to string
             'role' => 'integer', // Cast 'role' to integer
             'gouver' => 'integer', // Cast 'gouver' to integer
         ];

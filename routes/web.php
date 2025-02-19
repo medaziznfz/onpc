@@ -4,6 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\CertificatController;
+
+
+use App\Http\Controllers\GovernorateController;
+
+use App\Http\Controllers\FormControllerSubmit;
+
+
+# Frontend Controllers
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\StepController;
+
+use App\Http\Controllers\requestShowAdmin;
 
 // Public routes
 Route::get('/', function () {
@@ -26,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])
         ->name('notifications.mark-as-read');
         
-    Route::get('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])
+    Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])
         ->name('notifications.mark-all-as-read');
 
     // View all notifications
@@ -54,3 +67,92 @@ Route::get('/test-notification', function() {
     notify(auth()->user(), 'Test Notification', 'This is a test notification', '/dashboard');
     return 'Notification sent!';
 });
+
+
+#Route::get('/test',[BackendTestController::class,'test']);
+Route::get('/prev', [CertificatController::class,'profile_prev'])->name('prevontion');
+
+
+Route::get('/certificats/{certificat}/details', [CertificatController::class, 'getDetails'])
+     ->name('certificats.details')
+     ->middleware('auth');
+
+    
+Route::get('/demande/{id}', [CertificatController::class, 'showDetails'])
+     ->name('demande.show')
+     ->middleware('auth');
+
+
+
+Route::put('/certificat/validate-step/{id}', [CertificatController::class, 'validateStep'])
+    ->name('certificat.validate.step');
+
+Route::put('/certificat/validate-documents/{id}', [CertificatController::class, 'validateDocuments'])
+    ->name('certificat.validate.documents');
+
+Route::put('/certificat/{certificatId}/update-last-visite', [CertificatController::class, 'updateLastVisiteStatus'])
+    ->name('certificat.update.last.visite');
+
+Route::post('/certificat/nouveau', [CertificatController::class, 'createNewCertificat'])
+    ->name('certificat.new');
+
+Route::get('/requestprev', [requestShowAdmin::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('requestprev');
+
+    Route::get('/management', [UserController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('management/users');
+
+
+Route::get('/show_user/{id}', [UserController::class, 'show'])
+    ->name('show_user');
+
+
+Route::post('/update-user', [UserController::class, 'updateUser'])->name('update.user');
+
+
+Route::get('/request/details/{id}', [CertificatController::class, 'showDetails'])->name('request.details');
+
+
+Route::get('/certificat/{id}/visites', [CertificatController::class, 'showVisite'])->name('certificat.visites');
+Route::post('/certificat/visite/store', [CertificatController::class, 'storeVisite'])->name('certificat.visite.store');
+
+/* route step page */
+Route::get('/steps', [StepController::class, 'index'])->name('steps.index');
+Route::post('/steps', [StepController::class, 'store'])->name('steps.store');
+
+Route::get('/user/certificats/{certificat}', [UserController::class, 'showCertificat'])
+     ->name('user.certificats.show');
+
+
+// Afficher le formulaire de sélection des documents
+Route::get('/certificats/{certificat}/documents', [CertificatController::class, 'showDocumentSelection'])
+     ->name('certificats.documents');
+
+// Enregistrer les documents sélectionnés
+Route::post('/certificats/{certificat}/documents', [CertificatController::class, 'storeDocuments'])
+     ->name('certificats.store-documents');
+
+/* route pour details de demande certif */
+Route::get('/demande/{id}', function ($id) {
+    return view('front.pages.demande', ['id' => $id]);
+})->name('demande.show');
+
+Route::get('/certificat/{id}', [CertificatController::class, 'show'])->name('certificat.show');
+
+
+#route pour telecharger les ficher 
+Route::get('/telechargement', function () {
+    return view('download'); // Correspond au fichier `resources/views/download.blade.php`
+});
+// Afficher le formulaire de demande de certificat
+Route::get('/demande-certificat', [CertificatController::class, 'showForm'])->name('certificat.form');
+
+// Traiter la soumission du formulaire de demande de certificat
+Route::post('/demande-certificat', [CertificatController::class, 'submitForm'])->name('certificat.submit');
+Route::post('/submit-certificat', [CertificatController::class, 'submitForm'])
+     ->name('certificat.submit');
+
+
+Route::get('/get-delegations', [GovernorateController::class, 'getDelegations']);

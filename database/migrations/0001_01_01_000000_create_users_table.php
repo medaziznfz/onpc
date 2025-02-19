@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('cin')->nullable();       // Add 'cin' column
+            $table->string('cin')->nullable();       // Add 'cin' column
             $table->integer('role')->default(0);      // Add 'role' column with default value 0
             $table->integer('gouver')->nullable();    // Add 'gouver' column
             $table->rememberToken();

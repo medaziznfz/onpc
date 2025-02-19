@@ -1,0 +1,247 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Certificat;
+use App\Models\SpecificActivity;
+use App\Models\SpecificActivityErp;
+use App\Models\Document;
+use App\Models\Visite;
+
+class CertificatController extends Controller
+{
+
+    public function index()
+    {
+        // Récupérer tous les certificats de l'utilisateur connecté
+        $certificats = Certificat::where('user_id', auth()->id())
+                        ->with('documents')
+                        ->orderByDesc('created_at')
+                        ->get();
+    
+        return view('prev', [
+            'certificats' => $certificats,
+        ]);
+    }
+
+    public function getDetails($id)
+    {
+        $certificat = Certificat::where('user_id', auth()->id())
+                    ->with('documents')
+                    ->findOrFail($id);
+    
+        return view('partials.details_certif', compact('certificat'))->render();
+    }
+
+
+    public function createNewCertificat(Request $request)
+    {
+        // Créer un nouveau certificat avec statut initial
+        $newCertificat = Certificat::create([
+            'user_id' => auth()->id(),
+            'statut' => 1, // Statut initial pour démarrer les étapes
+            // Ajoutez ici les autres champs nécessaires
+        ]);
+
+        // Réinitialiser la session
+        session()->forget('new_certificat_request');
+
+        // Rediriger vers la page principale
+        return redirect()->route('prev')->with('success', 'تم تأكيد المرحلة بنجاح!');
+    }
+
+    public function validateStep($id)
+    {
+        $certificat = Certificat::findOrFail($id);
+        $certificat->statut = 4;
+        $certificat->save();
+
+         // Mettre à jour la dernière visite
+        $lastVisite = Visite::where('certificat_id', $certificat->id)
+        ->latest()
+        ->first();
+
+        if($lastVisite) {
+            $lastVisite->status = 1;
+            $lastVisite->save();
+        }
+
+        return redirect()->back()->with('success', 'تم تأكيد المرحلة بنجاح!');
+    }
+    public function updateLastVisiteStatus($certificatId)
+    {
+        $lastVisite = Visite::where('certificat_id', $certificatId)
+            ->latest()
+            ->first();
+
+        if($lastVisite) {
+            $lastVisite->status = 2;
+            $lastVisite->save();
+            return redirect()->back()->with('success', 'تم تأكيد المرحلة بنجاح!');
+        }
+
+        return response()->json(['success' => false], 404);
+    }
+
+    public function validateDocuments($id)
+    {
+        // Trouver le certificat par son ID
+        $certificat = Certificat::findOrFail($id);
+
+        // Mettre à jour le statut à 3 (validation des documents)
+        $certificat->statut = 3;
+        $certificat->save();
+
+        // Retourner une réponse JSON pour une mise à jour dynamique
+        return redirect()->back()->with('success', 'تم إرسال الطلب بنجاح!');
+    }
+
+    public function show($id)
+    {
+        $certificat = Certificat::findOrFail($id);
+        return view('certificat.show', compact('certificat'));
+    }
+
+    public function showCertificat($certificatId)
+    {
+        $certificat = Certificat::findOrFail($certificatId);
+        $selectedDocuments = $certificat->documents; // Documents sélectionnés
+        return view('user.certificats.show', compact('certificat', 'selectedDocuments'));
+    }
+
+    public function showVisite($id)
+    {
+        $certificat = Certificat::with('visites')->findOrFail($id);
+        return view('prev', compact('certificat'));
+    }
+
+    public function storeVisite(Request $request)
+    {
+        $data = $request->validate([
+            'certificat_id' => 'required|exists:certificats,id',
+            'date_visite'   => 'required|date',
+            'heure_visite'  => 'required',
+            'status'        => 'required|in:0,1,2',
+            'remarque'      => 'nullable|string',
+        ]);
+
+        \App\Models\Visite::create($data);
+
+        return redirect()->back()->with('success', 'La visite a été ajoutée avec succès.');
+    }
+
+    
+
+
+    // Afficher le formulaire de sélection des documents
+    public function showDocumentSelection(Certificat $certificat)
+    {
+        // Récupérer tous les documents disponibles
+        $documents = Document::all();
+
+        // Récupérer les IDs des documents déjà sélectionnés
+        $selectedDocumentIds = $certificat->documents->pluck('id')->toArray();
+
+        return view('prev', compact('certificat', 'documents', 'selectedDocumentIds'));
+    }
+
+    // Enregistrer les documents sélectionnés
+    public function storeDocuments(Request $request, Certificat $certificat)
+    {
+        // Validation des données
+        $request->validate([
+            'selected_documents' => 'sometimes|array',
+            'selected_documents.*' => 'integer|exists:documents,id',
+        ]);
+
+        // Synchroniser les documents sélectionnés avec la table pivot
+        $certificat->documents()->sync($request->selected_documents ?? []);
+
+        $certificat->statut = 2;
+        $certificat->save();
+
+        return redirect()->back()->with('success', 'تم حفظ المستندات بنجاح');
+    }
+    public function showDetails($id)
+    {
+        // Fetch the request details from the database
+        $request = Certificat::findOrFail($id);
+    
+        // Pass the request details to the view
+        return view('prevention.details', compact('request'));
+    
+    }
+
+
+    public function submitForm(Request $request)
+    {
+        $validated = $request->validate([
+            'gouvernorat' => 'required|integer',
+            'delegation' => 'required|integer',
+            'type-activite' => 'required|integer',
+            'specific-activity' => 'nullable|string', 
+            'specific-activity-erp' => 'nullable|string', 
+            
+            'other-activity' => 'nullable|string|max:255',
+        ]);
+    
+        // Récupérer l'ID de l'utilisateur connecté
+        $user_id = Auth::id();
+        if (!$user_id) {
+            // Rediriger si l'utilisateur n'est pas connecté
+            return redirect()->route('login');
+        }
+        $typeActivity = $request->input('type-activite');
+        // Récupérer l'activité sélectionnée
+        if ($typeActivity == 1) {
+            $specificActivity = $request->input('specific-activity-erp');
+        } elseif ($typeActivity == 2) {
+            $specificActivity = $request->input('specific-activity');
+        }
+        
+        $specificActivityOption = $request->input('specific-activity-option');
+        $otherActivity = $request->input('other-activity');
+
+        if($typeActivity == 2 || $typeActivity == 1)
+        {
+            // Si l'utilisateur a sélectionné "Autre" et entré une activité, on utilise celle-ci
+            if ($specificActivityOption == '0' && !empty($otherActivity)) {
+                $specificActivity = $otherActivity;
+            }  
+        }
+
+
+        Certificat::create([
+            'id' => time(),
+            'user_id' => $user_id,
+            'nationalIdPath' => 'NULL',
+            'legalAnnouncementPath' => 'NULL',
+            'buildingOwnershipPath' => 'NULL',
+            'buildingDiagramPath' => 'NULL',
+            'residentialBuildingPath' => 'NULL',
+            'licenseDecisionPath' => 'NULL',
+            'gouvernorat' => $request->input('gouvernorat'),
+            'delegation' => $request->input('delegation'),
+            'type_activite' => $typeActivity, // Enregistre l'activité ou "Autre" activité
+            'activity' => $specificActivity, // Enregistre l'activité ou "Autre" activité
+            'statut' => 1,
+
+       ]);
+    
+        return redirect()->back()->with('success', 'تم إرسال الطلب بنجاح!');
+    }
+
+    public function profile_prev(Request $request)
+    {
+        // Fetch all governorates from the database
+        $governorates = \App\Models\Governorate::all();
+
+        // Return the view with governorates passed to it
+        return view('prev.prev', compact('governorates'));
+    }
+
+
+}
