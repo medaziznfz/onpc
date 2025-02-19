@@ -4,7 +4,7 @@
     <div class="container">
       <div class="navbar-content">
         <a href="#" class="navbar-brand">
-          Office Nationale<span>PC</span>
+        للحماية المدنية<span>الديوان الوطني</span>
         </a>
         <ul class="navbar-nav">
           <!-- Notification Dropdown -->
@@ -17,8 +17,8 @@
             </a>
             <div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
               <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
-                <p>6 New Notifications</p>
-                <a href="javascript:;" class="text-muted">Clear all</a>
+                <p>6 إشعارات جديدة </p>
+                <a href="javascript:;" class="text-muted">امسح الكل </a>
               </div>
               <div class="p-1">
                 <a href="javascript:;" class="dropdown-item d-flex align-items-center py-2">
@@ -26,14 +26,14 @@
                     <i class="icon-sm text-white" data-feather="gift"></i>
                   </div>
                   <div class="flex-grow-1 me-2">
-                    <p>New Order Recieved</p>
+                    <p> استلام طلب جديد</p>
                     <p class="tx-12 text-muted">30 min ago</p>
                   </div>
                 </a>
                 <!-- Additional notification items can be added here -->
               </div>
               <div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
-                <a href="javascript:;">View all</a>
+                <a href="javascript:;"> عرض الكل</a>
               </div>
             </div>
           </li>
@@ -58,13 +58,13 @@
                 <li class="dropdown-item py-2">
                   <a href="pages/general/profile.html" class="text-body ms-0">
                     <i class="me-2 icon-md" data-feather="user"></i>
-                    <span>Profile</span>
+                    <span>حساب</span>
                   </a>
                 </li>
                 <li class="dropdown-item py-2">
                   <a href="javascript:;" class="text-body ms-0">
                     <i class="me-2 icon-md" data-feather="edit"></i>
-                    <span>Edit Profile</span>
+                    <span> تعديل حساب </span>
                   </a>
                 </li>
                 <li class="dropdown-item py-2">
@@ -73,7 +73,7 @@
                     @csrf
                     <button type="submit" class="text-body ms-0" style="border: none; background: none; padding: 0; margin: 0;">
                       <i class="me-2 icon-md" data-feather="log-out"></i>
-                      <span>Log Out</span>
+                      <span>تسجيل خروج</span>
                     </button>
                   </form>
                 </li>
@@ -95,7 +95,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('dashboard') }}">
             <i class="link-icon" data-feather="box"></i>
-            <span class="menu-title">Dashboard</span>
+            <span class="menu-title">الرئيسية</span>
           </a>
         </li>
         
@@ -104,7 +104,7 @@
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="link-icon" data-feather="smile"></i>
-            <span class="menu-title">Icons</span>
+            <span class="menu-title">شهادة وقاية</span>
             <i class="link-arrow"></i>
           </a>
           <div class="submenu">
@@ -121,7 +121,7 @@
         <li class="nav-item">
           <a class="nav-link" href="/">
             <i class="link-icon" data-feather="shield"></i>
-            <span class="menu-title">Prevention</span>
+            <span class="menu-title">متابعة المطالب</span>
             <i class="link-arrow"></i>
           </a>
           <div class="submenu">
@@ -140,7 +140,7 @@
         <li class="nav-item">
           <a class="nav-link" href="/">
             <i class="link-icon" data-feather="shield"></i>
-            <span class="menu-title">Prevention</span>
+            <span class="menu-title">إدارة المستخدمين</span>
             <i class="link-arrow"></i>
           </a>
           <div class="submenu">
