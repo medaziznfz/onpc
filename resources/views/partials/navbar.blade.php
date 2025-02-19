@@ -51,7 +51,7 @@
                   <p class="tx-16 fw-bolder">{{ Auth::user()->name }}</p>
                   <p class="tx-12 text-muted">{{ Auth::user()->email }}</p>
                   <!-- Display CIN under email -->
-                  <p class="tx-12 text-muted">{{ Auth::user()->cin ?? '' }}</p>
+                  <p class="tx-12 text-muted">{{ Auth::user()->cin }}</p>
                 </div>
               </div>
               <ul class="list-unstyled p-1">
@@ -65,12 +65,6 @@
                   <a href="javascript:;" class="text-body ms-0">
                     <i class="me-2 icon-md" data-feather="edit"></i>
                     <span>Edit Profile</span>
-                  </a>
-                </li>
-                <li class="dropdown-item py-2">
-                  <a href="javascript:;" class="text-body ms-0">
-                    <i class="me-2 icon-md" data-feather="repeat"></i>
-                    <span>Switch User</span>
                   </a>
                 </li>
                 <li class="dropdown-item py-2">
@@ -106,8 +100,7 @@
         </li>
         
         
-        
-        
+        <!-- hedha mte3 talab chhedet wiqaya -->
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="link-icon" data-feather="smile"></i>
@@ -123,8 +116,8 @@
           </div>
         </li>
 
-        {{-- Conditionally show Prevention nav item for role == 1 --}}
-        @if(Auth::user()->role == 0)
+        <!-- hedha mte3 moutabe3et el mataleb -->
+        @if(Auth::user()->role == 1 || Auth::user()->role == 2)
         <li class="nav-item">
           <a class="nav-link" href="/">
             <i class="link-icon" data-feather="shield"></i>
@@ -140,7 +133,28 @@
           </div>
         </li>
         @endif
-        
+
+
+        <!-- hedha mte3 el user management -->
+        @if(Auth::user()->role == 2)
+        <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="link-icon" data-feather="shield"></i>
+            <span class="menu-title">Prevention</span>
+            <i class="link-arrow"></i>
+          </a>
+          <div class="submenu">
+            <ul class="submenu-item">
+              <li class="nav-item"><a class="nav-link" href="pages/icons/feather-icons.html">Feather Icons</a></li>
+              <li class="nav-item"><a class="nav-link" href="pages/icons/flag-icons.html">Flag Icons</a></li>
+              <li class="nav-item"><a class="nav-link" href="pages/icons/mdi-icons.html">Mdi Icons</a></li>
+            </ul>
+          </div>
+        </li>
+        @endif
+
+
+        <!-- hedhy khaleha zeyda akeka -->
         <li class="nav-item">
           <a href="https://www.nobleui.com/html/documentation/docs.html" target="_blank" class="nav-link">
             <i class="link-icon" data-feather="hash"></i>
