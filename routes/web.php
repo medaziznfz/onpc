@@ -21,10 +21,16 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // User management
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    
-    // Add other authenticated routes here
+
+    // yodkhel ken e super admin
+    Route::get('/special', function () {
+        return view('special'); // Create this view if needed
+    })->middleware('can:super-admin')->name('special');
+
+    // yodkher e service o super admin
+    Route::get('/service', function () {
+        return view('special'); // Create this view if needed
+    })->middleware('can:service')->name('service');
 });
 
 // Authentication routes (login/register/password reset)
