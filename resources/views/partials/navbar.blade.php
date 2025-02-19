@@ -144,7 +144,7 @@
         <li class="nav-item">
           <a href="https://www.nobleui.com/html/documentation/docs.html" target="_blank" class="nav-link">
             <i class="link-icon" data-feather="hash"></i>
-            <span class="menu-title">Documentation</span>
+            <span class="menu-title">ONPC</span>
           </a>
         </li>
       </ul>
