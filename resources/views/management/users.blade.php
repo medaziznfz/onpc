@@ -49,7 +49,7 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
-                                    <td class="customer_name">{{ $user->cin }}</td>
+                                    <td class="customer_name">{{ $user->id }}</td>
                                     <td class="email">{{ $user->name }}</td> 
                                     <td class="phone">
                                         @if($user->governorate_name)

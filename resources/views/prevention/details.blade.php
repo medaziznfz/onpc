@@ -5,15 +5,10 @@
         use App\Models\Document;
         use App\Models\Certificat;
         
-        $certificat = Certificat::with('documents')
-                        ->where('user_id', auth()->id())
-                        ->orderBy('id', 'desc')
-                        ->first();
+
     @endphp
 
-    @if(!$certificat)
-        @include('partials.demande_certif')
-    @else
+    
         @php
             // Récupérer tous les documents disponibles
             $documents = Document::all();
@@ -21,8 +16,8 @@
             $selectedDocumentIds = $certificat->documents->pluck('id')->toArray();
         @endphp
         <div class="card-body" >
-                            @include('partials.afficher_certif', ['certificat' => $certificat])
-            </div>
+            @include('partials.afficher_certif', ['certificat' => $certificat])
+        </div>
 
         <div class="container my-5" dir="rtl">
             <h1 class="text-center mb-4 ">متابعة طلبك</h1>
@@ -132,7 +127,7 @@
                 </div>
             </div>
         </div>
-    @endif
+    
 @endpush
 
 @push('styles')

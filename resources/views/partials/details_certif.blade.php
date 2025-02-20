@@ -1,7 +1,3 @@
-
-
-
-
 <div>
     <h1 class="text-center mb-4 mt-2 ">متابعة الطلب</h1>
     
@@ -85,7 +81,7 @@
 
 
 
-
+ @push('scripts')
 <script>
 $(document).ready(function() {
     // Défilement fluide vers le contenu lors du changement d'onglet
@@ -97,10 +93,11 @@ $(document).ready(function() {
     
     // Ajustement dynamique de la hauteur du contenu
     function adjustContentHeight() {
-        $('.tab-content').css('min-height', window.innerHeight - $('.wizard-bar').outerHeight() - 200);
+        $('.tab-content').css('min-height', window.innerHeight - $('.wizard-bar').outerHeight() );
     }
     
     adjustContentHeight();
     $(window).resize(adjustContentHeight);
 });
 </script>
+@endpush

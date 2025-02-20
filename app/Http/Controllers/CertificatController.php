@@ -165,15 +165,14 @@ class CertificatController extends Controller
 
         return redirect()->back()->with('success', 'تم حفظ المستندات بنجاح');
     }
+
     public function showDetails($id)
     {
-        // Fetch the request details from the database
-        $request = Certificat::findOrFail($id);
+        $certificat = Certificat::findOrFail($id);
     
-        // Pass the request details to the view
-        return view('prevention.details', compact('request'));
-    
+        return view('prevention.details', compact('certificat'))->render();
     }
+    
 
 
     public function submitForm(Request $request)
@@ -200,7 +199,7 @@ class CertificatController extends Controller
             $specificActivity = $request->input('specific-activity-erp');
         } elseif ($typeActivity == 2) {
             $specificActivity = $request->input('specific-activity');
-        }
+        }else {  $specificActivity = null ;}
         
         $specificActivityOption = $request->input('specific-activity-option');
         $otherActivity = $request->input('other-activity');
