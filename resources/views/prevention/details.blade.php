@@ -264,6 +264,17 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => console.log(data)) // Remplace par ton traitement
         .catch(error => console.error('Erreur:', error));
+        
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function() {
+                window.location.reload();
+            },
+            
+        });
+        
     });
 
     // ----------- Gestion de l'étape 3 -----------
