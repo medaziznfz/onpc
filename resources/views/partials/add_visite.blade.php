@@ -2,8 +2,8 @@
     <h2>إضافة زيارة</h2>
     <form method="POST" action="{{ route('certificat.visite.store') }}">
         @csrf
-        <!-- حقل مخفي لربط الزيارة بالشهادة -->
         <input type="hidden" name="certificat_id" value="{{ $certificat->id }}">
+        <input type="hidden" name="user_id" value="{{ $certificat->user_id }}">
 
         <div class="form-group">
             <label for="date_visite">تاريخ الزيارة</label>

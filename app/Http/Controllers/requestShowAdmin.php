@@ -26,7 +26,7 @@ class requestShowAdmin extends Controller
         
             // Filter by gouvernorat if the user's gouver is not null
             if ($user->gouver) {
-                $query->where('gouvernorat_id', $user->gouver);
+                $query->where('governorates.id', $user->gouver);
             }
         
             // Get the filtered results

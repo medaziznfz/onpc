@@ -20,8 +20,8 @@ use App\Http\Controllers\requestShowAdmin;
 
 // Public routes
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('dashboard');
+})->middleware('auth'); // Only accessible to authenticated users
 
 // Authenticated routes group
 Route::middleware(['auth'])->group(function () {
