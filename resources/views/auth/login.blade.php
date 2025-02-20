@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>تسجيل الدخول | تطبيقك</title>
+    <title>تسجيل الدخول</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('assetslogin/images/favicon.ico') }}">
 
@@ -138,7 +138,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center">
-                            <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> تطبيقك</p>
+                            <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script>  <a href="https://www.onpc.com.tn" target="_blank">الديوان الوطني للحماية المدنية</a>. </p>
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@
   <meta name="author" content="onpc">
 
 
-  <title>NobleUI - HTML Bootstrap 5 Admin Dashboard Template</title>
+  <title>الوقاية - إدارة السلامة</title>
 
   <!-- Fonts -->
   <link rel="stylesheet" href="{{ asset('assets/css/custom/custom.css') }}">

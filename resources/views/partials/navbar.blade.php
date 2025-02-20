@@ -4,7 +4,7 @@
     <div class="container">
       <div class="navbar-content">
         <a href="#" class="navbar-brand">
-        ل<span>اطني</span>
+        ح.م<span>.د.و</span>
         </a>
         <ul class="navbar-nav">
           <!-- Notification Dropdown -->

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>إنشاء حساب | تطبيقك</title>
+    <title>إنشاء حساب</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ asset('assetslogin/images/favicon.ico') }}">
 
@@ -64,7 +64,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
                                     <a href="/" class="d-inline-block auth-logo">
-                                        <img src="{{ asset('assetslogin/images/logo-light.png') }}" alt="" height="20">
+                                        <img src="{{ asset('assetslogin/images/logo.png') }}" alt="" height="120">
                                     </a>
                                     <h5 class="text-primary mt-3">إنشاء حساب جديد</h5>
                                 </div>
@@ -163,7 +163,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center">
-                            <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> تطبيقك</p>
+                            <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script>  <a href="https://www.onpc.com.tn" target="_blank">الديوان الوطني للحماية المدنية</a>. </p>
                         </div>
                     </div>
                 </div>
