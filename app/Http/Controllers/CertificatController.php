@@ -68,7 +68,7 @@ class CertificatController extends Controller
             $lastVisite->status = 1;
             $lastVisite->save();
         }
-
+        notify($certificat->user_id, 'الشهادة جاهزة', 'لقد تم قبول مطلبك الآن يمكنك الحصول عليها بالإدارة الجهوية', '/prev');
         return redirect()->back()->with('success', 'تم تأكيد المرحلة بنجاح!');
     }
     public function updateLastVisiteStatus($certificatId)
@@ -122,6 +122,7 @@ class CertificatController extends Controller
     {
         $data = $request->validate([
             'certificat_id' => 'required|exists:certificats,id',
+            'user_id' => 'required|exists:certificats,user_id',
             'date_visite'   => 'required|date',
             'heure_visite'  => 'required',
             'status'        => 'required|in:0,1,2',
@@ -129,7 +130,7 @@ class CertificatController extends Controller
         ]);
 
         \App\Models\Visite::create($data);
-
+        notify($request->user_id, 'برمجة زيارة', 'الرجاء التحقق من مطلبك', '/prev');
         return redirect()->back()->with('success', 'La visite a été ajoutée avec succès.');
     }
 
@@ -162,7 +163,7 @@ class CertificatController extends Controller
 
         $certificat->statut = 2;
         $certificat->save();
-
+        notify($certificat->user_id, 'الوثائق المطلوبة', 'الرجاء التحقق من مطلبك', '/prev');
         return redirect()->back()->with('success', 'تم حفظ المستندات بنجاح');
     }
 

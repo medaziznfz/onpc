@@ -73,7 +73,7 @@
           </a>
         </li>
         
-        
+        @if(Auth::user()->role == 0)
         <!-- hedha mte3 talab chhedet wiqaya -->
         <li class="nav-item">
           <a href="/prev" class="nav-link">
@@ -81,6 +81,7 @@
             <span class="menu-title">شهادة وقاية</span>
           </a>
         </li>
+        @endif
 
         <!-- hedha mte3 moutabe3et el mataleb -->
         @if(Auth::user()->role == 1 || Auth::user()->role == 2)

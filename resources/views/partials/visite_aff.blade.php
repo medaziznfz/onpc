@@ -1,6 +1,6 @@
 <body dir="rtl">
     <div class="container">
-        <h1>الزيارات</h1>
+        <h3 class="text-center mb-4">الزيارات</h1>
         <div class="table-responsive">
             <table>
                 <thead>
@@ -42,21 +42,6 @@
 
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        box-sizing: border-box;
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
     .table-responsive {
         overflow-x: auto;
     }
