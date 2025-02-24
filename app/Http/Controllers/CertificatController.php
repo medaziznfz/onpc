@@ -54,23 +54,28 @@ class CertificatController extends Controller
     }
 
     public function validateStep($id)
-    {
-        $certificat = Certificat::findOrFail($id);
-        $certificat->statut = 4;
-        $certificat->save();
+{
+    $certificat = Certificat::findOrFail($id);
+    $certificat->statut = 4;
+    $certificat->verified_at = now(); // Met à jour la date de vérification
+    $certificat->expiry_at = now()->addYears(2); // Définit l'expiration à 2 ans plus tard
+    $certificat->save();
 
-         // Mettre à jour la dernière visite
-        $lastVisite = Visite::where('certificat_id', $certificat->id)
+    // Mettre à jour la dernière visite
+    $lastVisite = Visite::where('certificat_id', $certificat->id)
         ->latest()
         ->first();
 
-        if($lastVisite) {
-            $lastVisite->status = 1;
-            $lastVisite->save();
-        }
-        notify($certificat->user_id, 'الشهادة جاهزة', 'لقد تم قبول مطلبك الآن يمكنك الحصول عليها بالإدارة الجهوية', '/prev');
-        return redirect()->back()->with('success', 'تم تأكيد المرحلة بنجاح!');
+    if ($lastVisite) {
+        $lastVisite->status = 1;
+        $lastVisite->save();
     }
+
+    notify($certificat->user_id, 'الشهادة جاهزة', 'لقد تم قبول مطلبك الآن يمكنك الحصول عليها بالإدارة الجهوية', '/prev');
+    
+    return redirect()->back()->with('success', 'تم تأكيد المرحلة بنجاح!');
+}
+
     public function updateLastVisiteStatus($certificatId)
     {
         $lastVisite = Visite::where('certificat_id', $certificatId)

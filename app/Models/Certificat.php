@@ -17,12 +17,8 @@ class Certificat extends Model
         'type_activite',
         'activity',
         'statut',
-        'nationalIdPath',
-        'legalAnnouncementPath',
-        'buildingOwnershipPath',
-        'buildingDiagramPath',
-        'residentialBuildingPath',
-        'licenseDecisionPath',
+        'verified_at',
+        'expiry_at'
     ];
     
     public function documents()

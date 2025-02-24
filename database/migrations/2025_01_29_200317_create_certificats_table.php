@@ -14,16 +14,12 @@ return new class extends Migration
     Schema::create('certificats', function (Blueprint $table) {
         $table->id();
         $table->unsignedBigInteger('user_id'); // Clé étrangère pour lier à l'utilisateur
-        $table->string('nationalIdPath');
-        $table->string('legalAnnouncementPath')->nullable();
-        $table->string('buildingOwnershipPath');
-        $table->string('buildingDiagramPath');
-        $table->string('residentialBuildingPath')->nullable();
-        $table->string('licenseDecisionPath')->nullable();
         $table->timestamps();
         $table->integer('gouvernorat');
         $table->integer('delegation');
         $table->integer('type_activite');
+        $table->timestamp('verified_at')->nullable();
+        $table->timestamp('expiry_at')->nullable();
 
 
 

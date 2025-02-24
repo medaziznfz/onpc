@@ -72,8 +72,14 @@
                             <h3 class="alert-heading">الشهادة جاهزة</h3>
                             <p>شهادتك متوفرة وجاهزة للاستلام.</p>
                         </div>
+
+                        <!-- Bouton de téléchargement -->
+                        <a href="{{ route('certificat.download', ['id' => $certificat->id]) }}" class="btn btn-primary">
+                            <i class="fas fa-download"></i> تحميل الشهادة
+                        </a>
                     </div>
                 </div>
+
             </div>
  </div>
    
