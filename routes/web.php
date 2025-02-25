@@ -18,6 +18,16 @@ use App\Http\Controllers\StepController;
 
 use App\Http\Controllers\requestShowAdmin;
 
+
+
+Route::get('/certificat/download/{id}', [CertificatController::class, 'download'])
+     ->name('certificat.download');
+
+Route::get('/certificate/scan', [CertificatController::class, 'showScanForm'])
+     ->name('certificats.scan.form');
+
+Route::get('/certificate/details', [CertificatController::class, 'showDetailsQr'])
+     ->name('certificats.details');
 // Public routes
 Route::get('/', function () {
     return view('dashboard');

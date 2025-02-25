@@ -10,6 +10,15 @@ use App\Models\SpecificActivity;
 use App\Models\SpecificActivityErp;
 use App\Models\Document;
 use App\Models\Visite;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Delegation; // Import the Delegation model
+use App\Models\Governorate; // Import the Delegation model
+use App\Models\TypeActivite; // Import the Delegation model
+
+
+use Mpdf\Mpdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class CertificatController extends Controller
 {
@@ -54,27 +63,32 @@ class CertificatController extends Controller
     }
 
     public function validateStep($id)
-{
-    $certificat = Certificat::findOrFail($id);
-    $certificat->statut = 4;
-    $certificat->verified_at = now(); // Met à jour la date de vérification
-    $certificat->expiry_at = now()->addYears(2); // Définit l'expiration à 2 ans plus tard
-    $certificat->save();
+        {
+            $certificat = Certificat::findOrFail($id);
+            $certificat->statut = 4;
+            $certificat->verified_at = now(); // Met à jour la date de vérification
+            $certificat->expiry_at = now()->addYears(2); // Définit l'expiration à 2 ans plus tard
 
-    // Mettre à jour la dernière visite
-    $lastVisite = Visite::where('certificat_id', $certificat->id)
-        ->latest()
-        ->first();
+            // Générer le hash basé sur id, user_id et gouvernorat
+            $hashString = $certificat->id . $certificat->user_id . $certificat->gouvernorat;
+            $certificat->hash = hash('sha256', $hashString); // Générer un hash SHA-256
 
-    if ($lastVisite) {
-        $lastVisite->status = 1;
-        $lastVisite->save();
-    }
+            $certificat->save();
 
-    notify($certificat->user_id, 'الشهادة جاهزة', 'لقد تم قبول مطلبك الآن يمكنك الحصول عليها بالإدارة الجهوية', '/prev');
-    
-    return redirect()->back()->with('success', 'تم تأكيد المرحلة بنجاح!');
-}
+            // Mettre à jour la dernière visite
+            $lastVisite = Visite::where('certificat_id', $certificat->id)
+                ->latest()
+                ->first();
+
+            if ($lastVisite) {
+                $lastVisite->status = 1;
+                $lastVisite->save();
+            }
+
+            notify($certificat->user_id, 'الشهادة جاهزة', 'لقد تم قبول مطلبك الآن يمكنك الحصول عليها بالإدارة الجهوية', '/prev');
+            
+            return redirect()->back()->with('success', 'تم تأكيد المرحلة بنجاح!');
+        }   
 
     public function updateLastVisiteStatus($certificatId)
     {
@@ -247,6 +261,56 @@ class CertificatController extends Controller
         // Return the view with governorates passed to it
         return view('prev.prev', compact('governorates'));
     }
+
+
+    public function download($id)
+    {
+        $certificat = Certificat::with('user')->findOrFail($id);
+        // Generate QR code
+        $qrCode = base64_encode(QrCode::format('svg')->size(200)->generate($certificat->hash));
+
+        // 1) Render your Blade view as a string
+        $html = view('certificats.pdf', [
+            'certificat' => $certificat,
+            'qrCode'     => $qrCode
+        ])->render();
+
+        // Create mPDF instance with Arabic support options
+        $mpdf = new Mpdf([
+            'mode'              => 'utf-8',
+            'format'            => 'A4',
+            'autoLangToFont'    => true,   // Auto-detect language to use proper fonts
+            'autoScriptToLang'  => true,   // Enable automatic script-to-language
+        ]);
+
+        // 3) Write the HTML, then output as download
+        $mpdf->WriteHTML($html);
+        return $mpdf->Output('certificate-' . $certificat->id . '.pdf', 'D');
+    }
+
+    // Show QR scanner form
+    public function showScanForm()
+    {
+        return view('certificats.scan');
+    }
+
+    // Show certificate details from QR
+    public function showDetailsQr(Request $request)
+    {
+        $hash = $request->input('hash');
+        
+        if (!$hash) {
+            return redirect()->route('certificats.scan.form')
+                ->with('error', 'QR code data missing');
+        }
+
+        $certificate = Certificat::with('user')
+            ->where('hash', $hash)
+            ->firstOrFail();
+
+        return view('certificats.details', compact('certificate'));
+    }
+
 
 
 }

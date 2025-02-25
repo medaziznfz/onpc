@@ -7,9 +7,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "caouecs/laravel-lang": "*",
+        "barryvdh/laravel-dompdf": "*",
         "laravel/framework": "^11.31",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "mpdf/mpdf": "^8.2",
+        "niklasravnsborg/laravel-pdf": "^4.1",
+        "simplesoftwareio/simple-qrcode": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

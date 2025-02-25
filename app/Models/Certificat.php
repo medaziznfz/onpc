@@ -18,7 +18,8 @@ class Certificat extends Model
         'activity',
         'statut',
         'verified_at',
-        'expiry_at'
+        'expiry_at',
+        'hash'
     ];
     
     public function documents()
@@ -45,5 +46,31 @@ class Certificat extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    
+
+    public function getGouvernoratNameAttribute()
+    {
+        return Governorate::where('id', $this->gouvernorat)->value('name') ?? 'N/A';
+    }
+
+    public function getDelegationNameAttribute()
+    {
+        return Delegation::where('id', $this->delegation)->value('name') ?? 'N/A';
+    }
+
+    public function getTypeActiviteNameAttribute()
+    {
+        return TypeActivite::where('id', $this->type_activite)->value('nom') ?? 'N/A';
+    }
+
+    public function getFormattedCreatedAtAttribute()
+    {
+        return $this->created_at;
+    }
+
+    public function getFormattedExpiryAtAttribute()
+    {
+        return $this->expiry_at;
     }
 }

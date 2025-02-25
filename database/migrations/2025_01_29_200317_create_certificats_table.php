@@ -20,6 +20,7 @@ return new class extends Migration
         $table->integer('type_activite');
         $table->timestamp('verified_at')->nullable();
         $table->timestamp('expiry_at')->nullable();
+        $table->string('hash')->nullable();
 
 
 
