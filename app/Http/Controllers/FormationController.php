@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Formation;
 use App\Models\Governorate;
 use App\Models\Delegation;
+use App\Models\FormationAccepter;
+use Illuminate\Support\Facades\DB;
 
 
 class FormationController extends Controller
@@ -94,6 +96,70 @@ class FormationController extends Controller
         $formations = Formation::withCount('demandes')->get();
         return view('formations.requestformation', compact('formations'));
     }
+
+    public function creationFormation(Request $request)
+    {
+        // Validation des données
+        $request->validate([
+            'formation_id' => 'required|exists:formation,id',
+            'date_prevue'  => 'required|date',
+            'demande_ids'  => 'required|array',
+        ]);
+
+
+
+        // Pour chaque demande sélectionnée, insérer une ligne dans la table formation_accepter
+        foreach ($request->demande_ids as $demandeId) {
+            DB::table('formation_accepter')->insert([
+                'formation_id' => $request->formation_id,
+                'demande_id'   => $demandeId,
+                'date_prevue'  => $request->date_prevue,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ]);
+
+            $demande = DemandeFormation::findOrFail($demandeId);
+            $demande->status = 2;
+            $demande->save();
+        }
+
+        // Redirection avec message de succès
+        return redirect()->back()->with('success', 'Données ajoutées avec succès dans la formation.');
+    }
+    public function confirmeFormation(Request $request, Formation $formation)
+    {
+        $request->validate([
+            'processed_ids' => 'required|array',
+            'processed_ids.*' => 'exists:demande_formation,id'
+        ]);
+            
+    
+        foreach ($request->processed_ids as $demandeId) {
+            $demande = DemandeFormation::findOrFail($demandeId);
+            $demande->status = 4;
+            $demande->save();
+        }
+    
+        return back()->with('success', 'تم تأكيد الطلبات المحددة بنجاح');
+    }
+    
+    public function refuseFormation(Request $request, Formation $formation)
+    {
+        $request->validate([
+            'processed_ids' => 'required|array',
+            'processed_ids.*' => 'exists:demande_formation,id'
+        ]);
+    
+        foreach ($request->processed_ids as $demandeId) {
+            $demande = DemandeFormation::findOrFail($demandeId);
+            $demande->status = 3;
+            $demande->save();
+    
+        }
+    
+        return back()->with('success', 'تم رفض الطلبات المحددة بنجاح');
+    }
+
 }
 
 

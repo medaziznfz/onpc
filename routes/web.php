@@ -178,3 +178,12 @@ Route::get('/formations/{formation}/requests', [FormationController::class, 'man
 
 Route::get('/requestformation', [FormationController::class, 'showRequests'])
      ->name('formations.list');
+Route::post('/formation/creation', [FormationController::class, 'creationFormation'])
+     ->name('formation.creation');
+
+Route::post('/formations/{formation}/confirmer', [FormationController::class, 'confirmeFormation'])
+     ->name('formations.confirme');
+
+Route::post('/formations/{formation}/refuser', [FormationController::class, 'refuseFormation'])
+     ->name('formations.refuse');
+    

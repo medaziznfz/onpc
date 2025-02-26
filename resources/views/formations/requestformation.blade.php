@@ -2,9 +2,15 @@
 
 @php
     use App\Models\Formation;
-    use App\Models\DemandeFormation;
-
-    $formations = Formation::withCount('demandes')->get();
+    
+    $formations = Formation::withCount([
+        'demandes as pending_demandes' => function($query) {
+            $query->where('status', 1);
+        },
+        'demandes as accepted_demandes' => function($query) {
+            $query->where('status', 2);
+        }
+    ])->get();
 @endphp
 
 @push('content')
@@ -18,9 +24,14 @@
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3 class="card-title h5 mb-0">{{ $formation->name }}</h3>
-                        <span class="badge bg-primary">
-                            {{ $formation->demandes_count }} طلب
-                        </span>
+                        <div class="badges-container">
+                            <span class="badge bg-primary me-1">
+                                {{ $formation->pending_demandes }} طلب معلق
+                            </span>
+                            <span class="badge bg-success">
+                                {{ $formation->accepted_demandes }} طلب مقبول
+                            </span>
+                        </div>
                     </div>
                     
                     <div class="mt-auto">
@@ -56,14 +67,24 @@
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     }
     
-    .badge.bg-primary {
-        background-color: #0d6efd !important;
-        font-size: 0.9rem;
+    .badge {
+        font-size: 0.8rem;
         padding: 0.5em 0.75em;
     }
     
-    .hover-shadow-lg {
-        box-shadow: 0 0.15rem 0.75rem rgba(0, 0, 0, 0.1);
+    .bg-primary {
+        background-color: #0d6efd !important;
+    }
+    
+    .bg-success {
+        background-color: #28a745 !important;
+    }
+    
+    .badges-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        justify-content: flex-end;
     }
     
     @media (max-width: 768px) {
@@ -76,7 +97,7 @@
         }
         
         .badge {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
     }
 </style>

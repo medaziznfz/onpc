@@ -24,11 +24,6 @@ class DemandeFormation extends Model
         return $this->belongsTo(Governorate::class, 'gouvernerat');
     }
 
-    public function delegation()
-    {
-        return $this->belongsTo(Delegation::class, 'delegation');
-    }
-
     public function formation()
     {
         return $this->belongsTo(Formation::class);
@@ -37,9 +32,17 @@ class DemandeFormation extends Model
     {
         return $this->belongsTo(Governorate::class, 'gouvernerat');
     }
+    public function delegation()
+    {
+        return $this->belongsTo(Delegation::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
+    }
+    public function formationAcceptee()
+    {
+        return $this->hasOne(FormationAccepter::class, 'demande_id');
     }
         
 }

@@ -5,7 +5,7 @@
     $statuts = [
         1 => '🟡 طلبك قيد الانتظار',
         2 => '🔵 طلبك قيد المعالجة',
-        3 => '🔵 طلبك قيد المعالجة',
+        3 => '❌  طلبك مرفوض',
         4 => '✅ تم قبول طلبك',
     ];
         $steps = [
@@ -56,10 +56,45 @@
                     <div class="content-container">
                         <div class="alert alert-success">
                             <h3 class="alert-heading">ملاحظة</h3>
-                            <p>يجب تقديم هذه الوثائق إلى مقر الإدارة الجهوية للحماية المدنية أو إلى مقر فرقة الحماية المدنية التي توجد البناية بدائرتها الترابية:</p>
+                            <p class="mb-4">تم قبول طلبكم، يمكنكم بدء التكوين في التاريخ المذكور أعلاه. يرجى إحضار الوثائق الضرورية ومبلغ التكوين.</p>
+                        </div>    
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>رقم الطلب</th>
+                                        <th>اسم التكوين</th>
+                                        <th>الوثائق</th>
+                                        <th>المدة</th>
+                                        <th>السعر</th>
+                                        <th>التاريخ المحدد</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ $demande->id }}</td>
+                                        <td>{{ $formation->name ?? 'غير محدد' }}</td>
+                                        
+                                        <td>
+                                            @if($formation->document)
+                                                @foreach(explode(',', $formation->document) as $doc)
+                                                    <div class="document-item mb-2">
+                                                        <i class="fas fa-file-pdf text-danger me-2"></i>
+                                                        {{ trim($doc) }}
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <span class="text-muted">لا توجد وثائق مطلوبة</span>
+                                            @endif
+                                        </td>
+                                        
+                                        <td>{{ $formation->periode }} أسبوع</td>
+                                        <td>{{ $formation->prix }} دينار</td>
+                                        <td>{{ optional($demande->formationAcceptee)->date_prevue ?? 'يحدد لاحقا' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-
-
                     </div>
                 </div>
                 
