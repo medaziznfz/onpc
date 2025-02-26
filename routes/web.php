@@ -165,3 +165,16 @@ Route::post('/submit-certificat', [CertificatController::class, 'submitForm'])
 
 
 Route::get('/get-delegations', [GovernorateController::class, 'getDelegations']);
+
+use App\Http\Controllers\FormationController;
+
+Route::get('/formation', [FormationController::class, 'create'])->name('formation.create');
+Route::post('/formation', [FormationController::class, 'store'])->name('formation.store');
+Route::get('/demandes', [FormationController::class, 'index'])->name('demandes.index');
+Route::get('/demandes/{id}/details', [FormationController::class, 'details'])->name('demandes.details');
+// Route pour les détails des demandes d'une formation spécifique
+Route::get('/formations/{formation}/requests', [FormationController::class, 'manageRequests'])
+     ->name('formations.requests');
+
+Route::get('/requestformation', [FormationController::class, 'showRequests'])
+     ->name('formations.list');

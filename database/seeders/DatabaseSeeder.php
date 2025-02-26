@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ActivitySeeder::class,
             ActivityErpSeeder::class,
             DocumentSeeder::class,
+            FormationSeeder::class,
         ]);
     }
 }
