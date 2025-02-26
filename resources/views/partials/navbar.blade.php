@@ -81,15 +81,46 @@
             <span class="menu-title">شهادة وقاية</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a href="/formation" class="nav-link">
+            <i class="link-icon" data-feather="refresh-ccw"></i>
+            <span class="menu-title">تكوين للعموم</span>
+          </a>
+        </li>
         @endif
+
 
         <!-- hedha mte3 moutabe3et el mataleb -->
         @if(Auth::user()->role == 1 || Auth::user()->role == 2)
         <li class="nav-item">
-          <a class="nav-link" href="/requestprev">
+          <a class="nav-link" href="#">
             <i class="link-icon" data-feather="layers"></i>
-            <span class="menu-title">متابعة المطالب</span>
+            <span class="menu-title">شهادة الوقاية</span>
+            <i class="link-arrow"></i>
           </a>
+          <div class="submenu">
+            <ul class="submenu-item">
+              <li class="nav-item"><a class="nav-link" href="/requestprev">متابعة المطالب</a></li>
+              <li class="nav-item"><a class="nav-link" href="/scan">التحقق من شهادة</a></li>
+            </ul>
+          </div>
+        </li>
+        @endif
+
+        @if(Auth::user()->role == 1 || Auth::user()->role == 2)
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="link-icon" data-feather="layers"></i>
+            <span class="menu-title">تكوين للعموم</span>
+            <i class="link-arrow"></i>
+          </a>
+          <div class="submenu">
+            <ul class="submenu-item">
+              <li class="nav-item"><a class="nav-link" href="/requestformation">متابعة المطالب</a></li>
+              <li class="nav-item"><a class="nav-link" href="/scanformation">التحقق من شهادة</a></li>
+            </ul>
+          </div>
         </li>
         @endif
 
@@ -107,7 +138,7 @@
 
         <!-- hedhy khaleha zeyda akeka -->
         <li class="nav-item">
-          <a href="https://www.nobleui.com/html/documentation/docs.html" target="_blank" class="nav-link">
+          <a href="#" class="nav-link">
             <i class="link-icon" data-feather="hash"></i>
             <span class="menu-title">ONPC</span>
           </a>

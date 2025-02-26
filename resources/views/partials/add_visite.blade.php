@@ -88,7 +88,6 @@
     background-color: #45a049;
 }
 
-/* التجاوب */
 @media (max-width: 768px) {
     .add-visite-form {
         padding: 15px;

@@ -47,7 +47,7 @@
                         </thead>
                         <tbody class="list form-check-all">
                             @foreach($users as $user)
-                                <tr>
+                                <tr data-user-id="{{ $user->id }}" data-governorate-id="{{ $user->governorate_id }}">
                                     <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                     <td class="customer_name">{{ $user->id }}</td>
                                     <td class="email">{{ $user->name }}</td> 
@@ -59,7 +59,15 @@
                                         @endif
                                     </td> <!-- Display governorate name or "الجميع" if null -->
                                     <td class="status"><span class="badge bg-success-subtle text-success text-uppercase">{{ $user->email }}</span></td>
-                                    <td class="date">{{ $user->role }}</td> 
+                                    <td class="date">
+                                        @if($user->role == 0)
+                                            مستعمل
+                                        @elseif($user->role == 1)
+                                            جهوي 
+                                        @elseif($user->role == 2)
+                                            مركزي
+                                        @endif
+                                    </td> <!-- Display role nickname with governorate in parentheses for role 1 -->
                                     <td>
                                         <div class="d-flex gap-2">
                                             <div class="edit">
@@ -121,17 +129,20 @@
                         <input type="email" class="form-control" id="editUserEmail" name="email">
                     </div>
                     <div class="mb-3">
+                        <label for="editUserRole" class="form-label">الخطة</label>
+                        <select class="form-control" id="editUserRole" name="role">
+                            <option value="0">مستعمل</option>
+                            <option value="1">جهوي</option>
+                            <option value="2">مركزي</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="gouverField" style="display: none;">
                         <label for="editUserGouver" class="form-label">الولاية</label>
-                        <select class="form-control" id="editUserGouver" name="gouver">
-                            <option value="">الجميع</option> <!-- Option for null -->
+                        <select class="form-control" id="editUserGouver" name="gouver" required>
                             @foreach($governorates as $governorate)
                                 <option value="{{ $governorate->id }}">{{ $governorate->name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editUserRole" class="form-label">الخطة</label>
-                        <input type="text" class="form-control" id="editUserRole" name="role">
                     </div>
                 </form>
             </div>
@@ -167,76 +178,100 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const editButtons = document.querySelectorAll('.edit-item-btn');
-    const editUserForm = document.getElementById('editUserForm');
-    const saveChangesBtn = document.getElementById('saveChangesBtn');
+        const editButtons = document.querySelectorAll('.edit-item-btn');
+        const editUserForm = document.getElementById('editUserForm');
+        const saveChangesBtn = document.getElementById('saveChangesBtn');
+        const gouverField = document.getElementById('gouverField');
+        const editUserRole = document.getElementById('editUserRole');
+        const editUserGouver = document.getElementById('editUserGouver');
 
-    // Add event listeners to all "تحيين" buttons
-    editButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const row = this.closest('tr');
-            const userId = row.querySelector('.customer_name').innerText;
-            const userName = row.querySelector('.email').innerText;
-            const userEmail = row.querySelector('.status').innerText;
-            const userGouver = row.querySelector('.phone').innerText;
-            const userRole = row.querySelector('.date').innerText;
+        // Add event listeners to all "تحيين" buttons
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const row = this.closest('tr');
+                const userId = row.querySelector('.customer_name').innerText;
+                const userName = row.querySelector('.email').innerText;
+                const userEmail = row.querySelector('.status').innerText;
+                const userGouver = row.querySelector('.phone').innerText;
+                const userRole = row.querySelector('.date').innerText;
+                const governorateId = row.getAttribute('data-governorate-id'); // Get governorate ID from the row
 
-            // Populate the modal fields with the current user data
-            document.getElementById('editUserId').value = userId;
-            document.getElementById('editUserName').value = userName;
-            document.getElementById('editUserEmail').value = userEmail;
-            document.getElementById('editUserGouver').value = userGouver === "الجميع" ? "" : userGouver; // Handle "الجميع"
-            document.getElementById('editUserRole').value = userRole;
+                // Populate the modal fields with the current user data
+                document.getElementById('editUserId').value = userId;
+                document.getElementById('editUserName').value = userName;
+                document.getElementById('editUserEmail').value = userEmail;
+                document.getElementById('editUserRole').value = userRole.includes("جهوي") ? 1 : userRole.includes("مستعمل") ? 0 : 2;
+
+                // Handle governorate field based on role
+                if (userRole.includes("جهوي")) {
+                    gouverField.style.display = 'block';
+                    editUserGouver.value = governorateId || ""; // Pre-select the governorate value
+                } else {
+                    gouverField.style.display = 'none';
+                    editUserGouver.value = ""; // Set to NULL
+                }
+            });
         });
-    });
 
-    // Handle form submission when "حفظ التغييرات" is clicked
-    saveChangesBtn.addEventListener('click', function () {
-        const formData = new FormData(editUserForm);
-
-        fetch('/update-user', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'تم!',
-                    text: 'تم تحديث المستعمل بنجاح.',
-                    confirmButtonText: 'حسناً'
-                }).then(() => {
-                    // Update the table row dynamically
-                    const row = document.querySelector(`tr[data-user-id="${data.user.id}"]`);
-                    if (row) {
-                        row.querySelector('.email').innerText = data.user.name;
-                        row.querySelector('.status').innerText = data.user.email;
-                        row.querySelector('.phone').innerText = data.user.governorate_name || "الجميع"; // Handle "الجميع"
-                        row.querySelector('.date').innerText = data.user.role;
-                    }
-
-                    // Close the modal
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('showModal'));
-                    modal.hide();
-                });
+        // Dynamic role change event
+        editUserRole.addEventListener('change', function () {
+            if (this.value == 1) {
+                gouverField.style.display = 'block';
+                editUserGouver.setAttribute('required', true); // Make governorate required
             } else {
+                gouverField.style.display = 'none';
+                editUserGouver.removeAttribute('required'); // Remove required attribute
+                editUserGouver.value = ""; // Set to NULL
+            }
+        });
+
+        // Handle form submission when "حفظ التغييرات" is clicked
+        saveChangesBtn.addEventListener('click', function () {
+            if (editUserRole.value == 1 && !editUserGouver.value) {
                 Swal.fire({
                     icon: 'error',
                     title: 'خطأ!',
-                    text: 'حدث خطأ أثناء تحديث المستعمل.',
+                    text: 'الولاية مطلوبة للدور الجهوي.',
                     confirmButtonText: 'حسناً'
                 });
+                return;
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+
+            const formData = new FormData(editUserForm);
+
+            fetch('/update-user', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'تم!',
+                        text: 'تم تحديث المستعمل بنجاح.',
+                        confirmButtonText: 'حسناً'
+                    }).then(() => {
+                        // Refresh the page
+                        window.location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'خطأ!',
+                        text: 'حدث خطأ أثناء تحديث المستعمل.',
+                        confirmButtonText: 'حسناً'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
     });
-});
 </script>
 @endpush
