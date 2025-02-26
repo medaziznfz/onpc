@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')
+@push('content')
 <div class="container">
     <h1>All Notifications</h1>
     <div class="list-group">
@@ -17,4 +17,4 @@
     </div>
     {{ $notifications->links() }}
 </div>
-@endsection
+@endpush

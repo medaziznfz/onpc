@@ -17,17 +17,16 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\StepController;
 
 use App\Http\Controllers\requestShowAdmin;
+use App\Http\Controllers\QRScannerController;
 
+Route::get('/scan', [QRScannerController::class, 'scan'])->name('qrscanner.scan');
+Route::get('/certificate/{hash}', [QRScannerController::class, 'showCertificate'])->name('qrscanner.show');
 
 
 Route::get('/certificat/download/{id}', [CertificatController::class, 'download'])
      ->name('certificat.download');
 
-Route::get('/certificate/scan', [CertificatController::class, 'showScanForm'])
-     ->name('certificats.scan.form');
 
-Route::get('/certificate/details', [CertificatController::class, 'showDetailsQr'])
-     ->name('certificats.details');
 // Public routes
 Route::get('/', function () {
     return view('dashboard');

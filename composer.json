@@ -8,6 +8,8 @@
     "require": {
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "*",
+        "intervention/image": "^3.11",
+        "khanamiryan/qrcode-detector-decoder": "^2.0",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "mpdf/mpdf": "^8.2",
