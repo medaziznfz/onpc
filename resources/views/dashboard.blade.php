@@ -143,7 +143,7 @@
 <div class="title-container">
     <h1>مرحبا بكم في منصتنا</h1>
     <p>اكتشف ميزاتنا المذهلة مع تجربة سلسة.</p>
-    <a href="#" class="next-btn">التالي</a>
+    <a href="#" class="next-btn">اقرأ المزيد</a>
 </div>
 
 

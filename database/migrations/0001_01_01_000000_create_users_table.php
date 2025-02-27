@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('cin')->nullable();       // Add 'cin' column
             $table->integer('role')->default(0);      // Add 'role' column with default value 0
             $table->integer('gouver')->nullable();    // Add 'gouver' column
+            $table->foreignId('grade_id')->nullable()->constrained('grades')->nullOnDelete(); // Add grade_id foreign key
             $table->rememberToken();
             $table->timestamps();
         });

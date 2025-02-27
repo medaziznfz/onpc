@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -21,9 +19,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'cin',       // Add 'cin' to mass assignable attributes
-        'role',      // Add 'role' to mass assignable attributes
-        'gouver',    // Add 'gouver' to mass assignable attributes
+        'cin',      
+        'role',      
+        'gouver',    
+        'grade_id',  // Added grade_id
     ];
 
     /**
@@ -46,18 +45,39 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'cin' => 'string',  // Cast 'cin' to string
-            'role' => 'integer', // Cast 'role' to integer
-            'gouver' => 'integer', // Cast 'gouver' to integer
+            'cin' => 'string',
+            'role' => 'integer',
+            'gouver' => 'integer',
+            'grade_id' => 'integer',
         ];
     }
 
-    // app/Models/User.php
+    /**
+     * Relationship: A User belongs to a Grade.
+     */
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
+    public function governorate()
+    {
+        return $this->belongsTo(\App\Models\Governorate::class, 'gouver');
+    }
+
+
+    /**
+     * Relationship: A User has many Notifications.
+     */
     public function notifications()
     {
         return $this->hasMany(Notification::class)->latest();
     }
 
+
+    /**
+     * Get unread notifications.
+     */
     public function unreadNotifications()
     {
         return $this->notifications()->where('read', false);

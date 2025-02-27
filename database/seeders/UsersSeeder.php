@@ -21,6 +21,7 @@ class UsersSeeder extends Seeder
             'email' => 'onpc@onpc.com',
             'cin' => '00000000',  // This is stored as integer
             'role' => 2,          // Default role (2 in this case)
+            'grade_id' => 6,          // Default role (2 in this case)
             'gouver' => null,     // No value for 'gouver', it can be left null if allowed in the schema
             'password' => Hash::make('123456789'),  // Password hashed using Laravel's Hash facade
         ]);
