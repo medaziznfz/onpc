@@ -117,13 +117,13 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="{{ asset('assetslogin/images/auth-one-bg.jpg') }}" class="d-block w-100" alt="Slide 1">
+            <img src="{{ asset('assetslogin/images/pccc.jpg') }}" class="d-block w-100" alt="Slide 1">
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('assetslogin/images/auth-one-bg.jpg') }}" class="d-block w-100" alt="Slide 2">
+            <img src="{{ asset('assetslogin/images/jey.jpg') }}" class="d-block w-100" alt="Slide 2">
         </div>
         <div class="carousel-item">
-            <img src="{{ asset('assetslogin/images/auth-one-bg.jpg') }}" class="d-block w-100" alt="Slide 3">
+            <img src="{{ asset('assetslogin/images/hey.jpg') }}" class="d-block w-100" alt="Slide 3">
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
@@ -141,9 +141,9 @@
 
 <!-- Title Section -->
 <div class="title-container">
-    <h1>Welcome to Our Platform</h1>
-    <p>Explore our amazing features with a seamless experience.</p>
-    <a href="#" class="next-btn">Next</a>
+    <h1>مرحبا بكم في منصتنا</h1>
+    <p>اكتشف ميزاتنا المذهلة مع تجربة سلسة.</p>
+    <a href="#" class="next-btn">التالي</a>
 </div>
 
 
