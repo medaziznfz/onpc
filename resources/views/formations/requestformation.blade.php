@@ -2,13 +2,26 @@
 
 @php
     use App\Models\Formation;
-    
+
+    // Get the authenticated user
+    $user = auth()->user();
+
+    // Get the gouver ID from the user
+    $gouverId = $user->gouver;
+
+    // Query formations with demandes count, filtered by gouvernerat if applicable
     $formations = Formation::withCount([
-        'demandes as pending_demandes' => function($query) {
-            $query->where('status', 1);
+        'demandes as pending_demandes' => function($query) use ($gouverId) {
+            $query->where('status', 1)
+                  ->when($gouverId, function ($query, $gouverId) {
+                      return $query->where('gouvernerat', $gouverId);
+                  });
         },
-        'demandes as accepted_demandes' => function($query) {
-            $query->where('status', 2);
+        'demandes as accepted_demandes' => function($query) use ($gouverId) {
+            $query->where('status', 2)
+                  ->when($gouverId, function ($query, $gouverId) {
+                      return $query->where('gouvernerat', $gouverId);
+                  });
         }
     ])->get();
 @endphp

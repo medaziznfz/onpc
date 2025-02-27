@@ -1,14 +1,28 @@
 @extends('layouts.app')
 
 @php
+    // Get the authenticated user
+    $user = auth()->user();
+
+    // Get the gouver ID from the user
+    $gouverId = $user->gouver;
+
+    // Fetch demandes for the formation, filtered by gouvernerat if applicable
     $demandes = $formation->demandes()
                           ->with(['gouvernorat', 'delegation'])
                           ->where('status', 1)
+                          ->when($gouverId, function ($query, $gouverId) {
+                              return $query->where('gouvernerat', $gouverId);
+                          })
                           ->paginate(10);
-    
+
+    // Fetch processed demandes for the formation, filtered by gouvernerat if applicable
     $processedDemandes = $formation->demandes()
                                    ->with(['gouvernorat', 'delegation'])
                                    ->where('status', '!=', 1)
+                                   ->when($gouverId, function ($query, $gouverId) {
+                                       return $query->where('gouvernerat', $gouverId);
+                                   })
                                    ->get();
 @endphp
 
