@@ -186,4 +186,7 @@ Route::post('/formations/{formation}/confirmer', [FormationController::class, 'c
 
 Route::post('/formations/{formation}/refuser', [FormationController::class, 'refuseFormation'])
      ->name('formations.refuse');
+
+Route::get('/certificats/{id}/details', [CertificatController::class, 'showDetails2'])->name('certificat.details');
+
     

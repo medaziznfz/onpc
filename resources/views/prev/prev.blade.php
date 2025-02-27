@@ -25,12 +25,10 @@ $typesActivites = TypeActivite::pluck('nom', 'id')->toArray();
 <div class="container my-5" dir="rtl">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if($certificats->isNotEmpty())
-        <h2 class="mt-4 alert alert-info text-center">طلبات شهادة مسجلة</h2>
+        <h2 class="mt-4 alert alert-info text-center">ملفات شهائد الوقاية </h2>
         <div class="certificat-container">
             @foreach($certificats as $index => $certificat)
-                <div class="certificat-card shadow-sm p-4 mb-3 bg-white rounded {{ $loop->first ? 'active' : '' }}"
-                     onclick="loadCertificatDetails({{ $certificat->id }})"
-                     data-id="{{ $certificat->id }}">
+            <a href="{{ route('certificat.details', $certificat->id) }}" class="certificat-card shadow-sm p-4 mb-3 bg-white rounded">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <p class="mb-1"><strong>طلب رقم :</strong> {{ $index + 1 }}</p>
@@ -46,7 +44,7 @@ $typesActivites = TypeActivite::pluck('nom', 'id')->toArray();
                             </span>
                         </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
 
@@ -102,25 +100,6 @@ $typesActivites = TypeActivite::pluck('nom', 'id')->toArray();
         container.style.display = (container.style.display === 'none' || container.style.display === '') ? 'block' : 'none';
     });
 
-    function loadCertificatDetails(id) {
-        // Affiche un loader pendant le chargement
-        const container = document.getElementById('certificat-details-container');
-        container.innerHTML = '<div class="text-center py-4">جاري التحميل...</div>';
-
-        fetch(`/certificats/${id}/details`)
-            .then(response => response.text())
-            .then(html => {
-                container.innerHTML = html;
-                // Met à jour la classe active
-                document.querySelectorAll('.certificat-card').forEach(card => {
-                    card.classList.remove('active');
-                });
-                document.querySelector(`[data-id="${id}"]`).classList.add('active');
-            })
-            .catch(error => {
-                container.innerHTML = '<div class="alert alert-danger">حدث خطأ أثناء التحميل</div>';
-            });
-    }
 
     $(document).ready(function () {
             // Soumission du formulaire de demande

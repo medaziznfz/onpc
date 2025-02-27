@@ -16,7 +16,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title mb-0">المطالب</h4>
+                            <h1 class="mt-4 alert alert-info text-center"> المطالب</h1>
                         </div><!-- end card header -->
 
                         <div class="card-body">

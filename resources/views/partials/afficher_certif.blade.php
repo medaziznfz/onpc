@@ -6,7 +6,6 @@
     use App\Models\SpecificActivity;
     use App\Models\SpecificActivityErp;
 
-
     // Récupérer les informations du gouvernorat et de la délégation
     $gouvernorat = Governorate::find($certificat->gouvernorat);
     $delegation = Delegation::find($certificat->delegation);
@@ -18,13 +17,11 @@
     $activityDetails = 'غير محدد'; // Valeur par défaut
 
     if ($certificat->type_activite == 2) {
-        // Si type_activite est 2, utiliser le modèle SpecificActivity
         $activity = SpecificActivity::find($certificat->activity);
         if ($activity) {
             $activityDetails = $activity->name;
         }
     } elseif ($certificat->type_activite == 1) {
-        // Si type_activite est 1, utiliser le modèle SpecificActivityErp
         $activityErp = SpecificActivityErp::find($certificat->activity);
         if ($activityErp) {
             $activityDetails = $activityErp->name;
@@ -40,16 +37,41 @@
     ];
 @endphp
 
-<div id="afficher-certificat">
-    <div class="container">
-        <p><strong>رقم الملف :</strong> {{ $certificat->id }}</p>
-        <p><strong>الولاية :</strong> {{ $gouvernorat ? $gouvernorat->name : 'غير محددة' }}</p>
-        <p><strong>المعتمدية :</strong> {{ $delegation ? $delegation->name : 'غير محددة' }}</p>
-        <p><strong>نوع النشاط :</strong> {{ $typesActivites[$certificat->type_activite] ?? 'غير محدد' }}</p>
-        <p><strong>تفاصيل النشاط :</strong> {{ $activityDetails }}</p>
-        <p><strong>حالة الطلب :</strong> <span class="fw-bold">{{ $statuts[$certificat->statut] ?? 'غير محددة' }}</span></p>
+
+
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>رقم الملف :</strong> {{ $certificat->id }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1">
+                        <strong>حالة الطلب :</strong>
+                        <span class="fw-bold badge 
+                            @if($certificat->statut == 4) bg-success 
+                            @elseif($certificat->statut == 2 || $certificat->statut == 3) bg-info 
+                            @else bg-warning @endif">
+                            {{ $statuts[$certificat->statut] ?? 'غير محددة' }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>الولاية :</strong> {{ $gouvernorat ? $gouvernorat->name : 'غير محددة' }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>المعتمدية :</strong> {{ $delegation ? $delegation->name : 'غير محددة' }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>نوع النشاط :</strong> {{ $typesActivites[$certificat->type_activite] ?? 'غير محدد' }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>تفاصيل النشاط :</strong> {{ $activityDetails }}</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-
 
