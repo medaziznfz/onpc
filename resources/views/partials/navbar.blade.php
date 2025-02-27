@@ -112,13 +112,12 @@
         <li class="nav-item">
           <a class="nav-link" href="#">
             <i class="link-icon" data-feather="layers"></i>
-            <span class="menu-title">تكوين للعموم</span>
+            <span class="menu-title"> التكوين و الرسكلة</span>
             <i class="link-arrow"></i>
           </a>
           <div class="submenu">
             <ul class="submenu-item">
               <li class="nav-item"><a class="nav-link" href="/requestformation">متابعة المطالب</a></li>
-              <li class="nav-item"><a class="nav-link" href="/scanformation">التحقق من شهادة</a></li>
             </ul>
           </div>
         </li>

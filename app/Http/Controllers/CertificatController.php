@@ -192,6 +192,13 @@ class CertificatController extends Controller
     
         return view('prevention.details', compact('certificat'))->render();
     }
+    public function showDetails2($id)
+    {
+        $certificat = Certificat::findOrFail($id);
+        // Vous pouvez aussi vérifier l'authentification et l'appartenance au certificat
+        return view('details', compact('certificat'));
+    }
+
     
 
 

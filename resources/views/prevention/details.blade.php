@@ -4,33 +4,28 @@
     @php
         use App\Models\Document;
         use App\Models\Certificat;
-        
+
+        // Récupérer tous les documents disponibles
+        $documents = Document::all();
+        // Récupérer les IDs des documents déjà sélectionnés
+        $selectedDocumentIds = $certificat->documents->pluck('id')->toArray();
+        $steps = [
+                'step1' => 'المستندات المطلوبة',
+                'step2' => ' تحقق من المستندات',
+                'step3' => 'زيارة المنشأة',
+                'step4' => 'الشهادة جاهزة'
+            ];
+            $currentStep = $certificat->statut;
 
     @endphp
+    <div class="container my-5" dir="rtl">
+    <h1 class="mt-4 alert alert-info text-center">  متابعة المطالب </h1>
+        <div class="card shadow-sm mb-4 ">
+            <div class="card-body ">
+                @include('partials.afficher_certif', ['certificat' => $certificat])
+            </div>
+        </div> 
 
-    
-        @php
-            // Récupérer tous les documents disponibles
-            $documents = Document::all();
-            // Récupérer les IDs des documents déjà sélectionnés
-            $selectedDocumentIds = $certificat->documents->pluck('id')->toArray();
-        @endphp
-        <div class="card-body" >
-            @include('partials.afficher_certif', ['certificat' => $certificat])
-        </div>
-
-        <div class="container my-5" dir="rtl">
-            <h1 class="text-center mb-4 ">متابعة طلبك</h1>
-            
-            @php
-                $steps = [
-                    'step1' => 'المستندات المطلوبة',
-                    'step2' => ' تحقق من المستندات',
-                    'step3' => 'زيارة المنشأة',
-                    'step4' => 'الشهادة جاهزة'
-                ];
-                $currentStep = $certificat->statut;
-            @endphp
 
             <!-- Navigation du processus -->
             <div class="wizard-bar sticky-top bg-white py-3">
