@@ -168,9 +168,9 @@
         document.querySelectorAll('.demande-checkbox').forEach(cb => cb.checked = this.checked);
     });
 
-    document.getElementById('checkAllProcessed').addEventListener('change', function(){
+    /* document.getElementById('checkAllProcessed').addEventListener('change', function(){
         document.querySelectorAll('.processed-checkbox').forEach(cb => cb.checked = this.checked);
-    });
+    }); */
 
     function getSelectedProcessed() {
         return Array.from(document.querySelectorAll('.processed-checkbox:checked'))
