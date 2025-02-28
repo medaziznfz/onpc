@@ -13,8 +13,10 @@
       <div class="navbar-content d-flex justify-content-between align-items-center">
         <!-- Left Section: Brand -->
         <div class="d-flex align-items-center">
+        <a href="/">
           <img src="{{ asset('assetslogin\images\logo.png') }}" alt="Grade Image" style="max-width: 28px; max-height: 28px;">
-          <a href="#" class="navbar-brand d-none d-md-block">
+        </a>
+          <a href="/" class="navbar-brand d-none d-md-block">
             <span>خدمات الحماية المدنية على الخط</span>
           </a>
         </div>
