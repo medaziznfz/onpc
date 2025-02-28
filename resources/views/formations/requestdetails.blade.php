@@ -86,13 +86,13 @@
             <form id="validerForm" action="{{ route('formations.confirme', $formation) }}" method="POST">
                 @csrf
                 <button type="button" id="validerDemandes" class="btn btn-success">
-                    <i class="fas fa-check me-2"></i> تأكيد الطلبات المحددة
+                    <i class="fas fa-check me-2"></i> ينجح
                 </button>
             </form>
             <form id="refuserForm" action="{{ route('formations.refuse', $formation) }}" method="POST">
                 @csrf
                 <button type="button" id="refuserDemandes" class="btn btn-danger">
-                    <i class="fas fa-times me-2"></i> رفض الطلبات المحددة
+                    <i class="fas fa-times me-2"></i> يرسب
                 </button>
             </form>
         </div>
