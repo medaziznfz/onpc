@@ -190,4 +190,7 @@ Route::post('/formations/{formation}/refuser', [FormationController::class, 'ref
 Route::get('/certificats/{id}/details', [CertificatController::class, 'showDetails2'])->name('certificat.details');
 
 Route::get('/demandes', [FormationController::class, 'index'])->name('formation.index');
-Route::get('/demandes/{id}/details', [FormationController::class, 'details'])->name('formation.details');    
+Route::get('/demandes/{id}/details', [FormationController::class, 'details'])->name('formation.details'); 
+
+Route::post('/certificat/{id}/upload-documents', [CertificatController::class, 'uploadDocuments'])
+    ->name('certificat.uploadDocuments');   

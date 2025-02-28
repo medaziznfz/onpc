@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use App\Models\Certificat;
 use App\Models\SpecificActivity;
 use App\Models\SpecificActivityErp;
@@ -318,6 +319,35 @@ class CertificatController extends Controller
         return view('certificats.details', compact('certificate'));
     }
 
+
+
+    public function uploadDocuments(Request $request, $id)
+    {
+        // Récupérer le certificat concerné
+        $certificat = Certificat::findOrFail($id);
+    
+        // Validation des fichiers uploadés
+        $request->validate([
+            'documents.*' => 'nullable|file|mimes:doc,docx,pdf,jpg,jpeg,png'
+        ]);
+    
+        if ($request->hasFile('documents')) {
+            foreach ($request->file('documents') as $documentId => $file) {
+                if ($file && $file->isValid()) {
+                    // Créer un nom de fichier basé sur l'ID du document, par exemple "1.png"
+                    $filename = $documentId . '.' . $file->getClientOriginalExtension();
+                    
+                    // Stocker le fichier dans un dossier unique pour ce certificat : documents/{certificat_id}
+                    $path = $file->storeAs("documents/{$certificat->id}", $filename, 'public');
+    
+                    // Mettre à jour le champ 'path' dans la table pivot certificat_document
+                    $certificat->documents()->updateExistingPivot($documentId, ['path' => $path]);
+                }
+            }
+        }
+    
+        return redirect()->back()->with('success', 'Documents uploadés avec succès!');
+    }
 
 
 }

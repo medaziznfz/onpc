@@ -58,14 +58,72 @@
                     </div>
                 </div>
 
+                
                 <!-- Étape 2 : المستندات والمواعيد -->
                 <div class="tab-pane fade {{ $currentStep == 2 ? 'show active' : '' }}" id="step2" role="tabpanel">
                     <div class="content-container">
                         <div class="card-body">
                             <div class="alert alert-success">
                                 <h3 class="alert-heading">تحقق من المستندات</h3>
-                                <p>في حال تم التحقق من جميع المستندات من قبل مكتب الوقاية، يمكنك تأكيد هذه الخطوة بالضغط على زر "تحقق من المستندات".</p>
+                                <p>
+                                    في حال تم التحقق من جميع المستندات من قبل مكتب الوقاية، يمكنك تأكيد هذه الخطوة بالضغط على زر "تحقق من المستندات".
+                                </p>
                             </div>
+
+                            @php
+                                // Définir la correspondance entre l'ID du document et son nom affiché
+                                $documentNames = [
+                                    1 => 'بطاقة إرشادات',
+                                    2 => 'بطاقة التعريف',
+                                    3 => 'إشهار قانوني مضمون بالنسبة لتأسيس الشخص المعنوي',
+                                    4 => 'وثيقة تثبت تصرف الطالب في البناية',
+                                    5 => 'رسم بياني لموقع البناية',
+                                    6 => 'وصل خالص الإتاوة',
+                                    7 => 'وثيقة خاصة بالبنايات المعدة للسكن',
+                                    8 => 'نسخة من قرار الترخيص'
+                                ];
+                            @endphp
+
+                            <!-- Aperçu des documents déposés -->
+                            <div class="uploaded-documents my-4">
+                                <h4 class="mb-3">Documents déposés :</h4>
+                                <div class="row">
+                                    @foreach($certificat->documents as $document)
+                                        @if(!empty($document->pivot->path))
+                                            @php
+                                                $extension = strtolower(pathinfo($document->pivot->path, PATHINFO_EXTENSION));
+                                            @endphp
+                                            <div class="col-md-3 mb-3">
+                                                <div class="card">
+                                                    @if(in_array($extension, ['jpg', 'jpeg', 'png', 'gif']))
+                                                        <img src="{{ asset('storage/' . $document->pivot->path) }}" class="card-img-top" alt="{{ $document->name }}">
+                                                    @elseif($extension == 'pdf')
+                                                        <img src="{{ asset('assetslogin/images/pdf.png') }}" class="card-img-top" alt="PDF Icon">
+                                                    @elseif(in_array($extension, ['doc', 'docx']))
+                                                        <img src="{{ asset('assetslogin/images/word.png') }}" class="card-img-top" alt="Word Icon">
+                                                    @else
+                                                        <div class="card-body text-center">
+                                                            <i class="fas fa-file fa-3x"></i>
+                                                        </div>
+                                                    @endif
+                                                    <!-- Affichage du nom du document -->
+                                                    <div class="card-body text-center">
+                                                        <p class="mb-0">
+                                                            {{ $documentNames[$document->id] ?? $document->name }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-footer text-center">
+                                                        <a href="{{ asset('storage/' . $document->pivot->path) }}" target="_blank" class="btn btn-primary btn-sm">
+                                                            Afficher
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                            <!-- Fin de l'aperçu -->
 
                             <!-- Formulaire pour valider les documents -->
                             <form id="validate-documents-form" action="{{ route('certificat.validate.documents', $certificat->id) }}" method="POST">
@@ -78,6 +136,8 @@
                         </div>
                     </div>
                 </div>
+
+
 
                 <!-- Étape 3 : الزيارة -->
                 <div class="tab-pane fade {{ $currentStep == 3 ? 'show active' : '' }}" id="step3" role="tabpanel">

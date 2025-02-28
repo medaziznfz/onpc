@@ -43,15 +43,88 @@
             <div class="content-container">
                 <div class="alert alert-success">
                     <h3 class="alert-heading">ملاحظة</h3>
-                    <p>يجب تقديم هذه الوثائق إلى مقر الإدارة الجهوية للحماية المدنية أو إلى مقر فرقة الحماية المدنية التي توجد البناية بدائرتها الترابية:</p>
+                    <p>لإتمام طلبك، يمكنك **تحميل الوثائق مباشرة عبر الإنترنت** من خلال المنصة الإلكترونية المخصصة، أو زيارة مقر الإدارة الجهوية للحماية المدنية أو فرقة الحماية المدنية التابعة للمنطقة التي تقع فيها البناية.</p>
+                    <p> نحرص على توفير خيارات متعددة لتسهيل عملية تقديم الطلبات وتلبية احتياجاتكم بأفضل طريقة ممكنة</p>
                 </div>
-                <ul class="list-group">
-                    @foreach($certificat->documents as $document)
-                        <li class="list-group-item">{{ $document->name }}</li>
-                    @endforeach
-                </ul>
+                <form action="{{ route('certificat.uploadDocuments', $certificat->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <ul class="list-group">
+                        @foreach($certificat->documents as $document)
+                            <li class="list-group-item">
+                                <div class="mb-2">
+                                    <strong>{{ $document->name }}</strong>
+                                </div>
+                                <div>
+                                    <!-- Champ d'upload pour le document -->
+                                    <input type="file" name="documents[{{ $document->id }}]" accept=".doc,.docx,.pdf,image/*">
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-success">Emettre les documents</button>
+                    </div>
+                </form>
+                <div class="card-body">
+                    @php
+                        // Définir la correspondance entre l'ID du document et son nom affiché
+                        $documentNames = [
+                            1 => 'بطاقة إرشادات',
+                            2 => 'بطاقة التعريف',
+                            3 => 'إشهار قانوني مضمون بالنسبة لتأسيس الشخص المعنوي',
+                            4 => 'وثيقة تثبت تصرف الطالب في البناية',
+                            5 => 'رسم بياني لموقع البناية',
+                            6 => 'وصل خالص الإتاوة',
+                            7 => 'وثيقة خاصة بالبنايات المعدة للسكن',
+                            8 => 'نسخة من قرار الترخيص'
+                        ];
+                    @endphp
+
+                    <!-- Aperçu des documents déposés -->
+                    <div class="uploaded-documents my-4">
+                        <h4 class="mt-4 alert alert-info text-center">Documents déposés :</h4>
+                        <div class="row">
+                            @foreach($certificat->documents as $document)
+                                @if(!empty($document->pivot->path))
+                                    @php
+                                        $extension = strtolower(pathinfo($document->pivot->path, PATHINFO_EXTENSION));
+                                    @endphp
+                                    <!-- Utilisation de classes responsives : col-12 sur mobile, col-sm-6 sur tablette, col-md-3 sur bureau -->
+                                    <div class="col-6 col-sm-6 col-md-3 mb-3">
+                                        <div class="card">
+                                            @if(in_array($extension, ['jpg', 'jpeg', 'png', 'gif']))
+                                                <img src="{{ asset('storage/' . $document->pivot->path) }}" class="card-img-top img-fluid" style="height: 150px; object-fit: cover;" alt="{{ $document->name }}">
+                                            @elseif($extension == 'pdf')
+                                                <img src="{{ asset('assetslogin/images/pdf.png') }}" class="card-img-top img-fluid" style="height: 150px; object-fit: contain;" alt="PDF Icon">
+                                            @elseif(in_array($extension, ['doc', 'docx']))
+                                                <img src="{{ asset('assetslogin/images/word.png') }}" class="card-img-top img-fluid" style="height: 150px; object-fit: contain;" alt="Word Icon">
+                                            @else
+                                                <div class="card-body text-center">
+                                                    <i class="fas fa-file fa-3x"></i>
+                                                </div>
+                                            @endif
+                                            <!-- Affichage du nom du document sous l'image -->
+                                            <div class="card-body text-center p-2">
+                                                <p class="mb-0 small">
+                                                    {{ $documentNames[$document->id] ?? $document->name }}
+                                                </p>
+                                            </div>
+                                            <div class="card-footer text-center p-2">
+                                                <a href="{{ asset('storage/' . $document->pivot->path) }}" target="_blank" class="btn btn-primary btn-sm">
+                                                    Afficher
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+
 
         <!-- Étape 3 : الزيارة -->
         <div class="tab-pane fade {{ $currentStep == 3 ? 'show active' : '' }}" id="step3" role="tabpanel">
