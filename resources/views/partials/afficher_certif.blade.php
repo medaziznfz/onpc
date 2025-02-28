@@ -39,7 +39,7 @@
 
 
 
-        <div class="card-body">
+        <div class="card-body text-center">
             <div class="row mb-3">
                 <div class="col-md-6">
                     <p class="mb-1"><strong>رقم الملف :</strong> {{ $certificat->id }}</p>
