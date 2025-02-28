@@ -58,7 +58,7 @@
                     </div>
                 </div>
 
-                
+
                 <!-- Étape 2 : المستندات والمواعيد -->
                 <div class="tab-pane fade {{ $currentStep == 2 ? 'show active' : '' }}" id="step2" role="tabpanel">
                     <div class="content-container">
@@ -84,29 +84,29 @@
                                 ];
                             @endphp
 
-                            <!-- Aperçu des documents déposés -->
+                            <!-- معاينة الوثائق المرفقة -->
                             <div class="uploaded-documents my-4">
-                                <h4 class="mb-3">Documents déposés :</h4>
+                                <h4 class="mt-4 alert alert-info text-center">الوثائق المرفقة:</h4>
                                 <div class="row">
                                     @foreach($certificat->documents as $document)
                                         @if(!empty($document->pivot->path))
                                             @php
                                                 $extension = strtolower(pathinfo($document->pivot->path, PATHINFO_EXTENSION));
                                             @endphp
-                                            <div class="col-md-3 mb-3">
+                                            <div class="col-6 col-sm-6 col-md-3 mb-3">
                                                 <div class="card">
                                                     @if(in_array($extension, ['jpg', 'jpeg', 'png', 'gif']))
                                                         <img src="{{ asset('storage/' . $document->pivot->path) }}" class="card-img-top" alt="{{ $document->name }}">
                                                     @elseif($extension == 'pdf')
-                                                        <img src="{{ asset('assetslogin/images/pdf.png') }}" class="card-img-top" alt="PDF Icon">
+                                                        <img src="{{ asset('assetslogin/images/pdf.png') }}" class="card-img-top" alt="رمز PDF">
                                                     @elseif(in_array($extension, ['doc', 'docx']))
-                                                        <img src="{{ asset('assetslogin/images/word.png') }}" class="card-img-top" alt="Word Icon">
+                                                        <img src="{{ asset('assetslogin/images/word.png') }}" class="card-img-top" alt="رمز Word">
                                                     @else
                                                         <div class="card-body text-center">
                                                             <i class="fas fa-file fa-3x"></i>
                                                         </div>
                                                     @endif
-                                                    <!-- Affichage du nom du document -->
+                                                    <!-- عرض اسم الوثيقة -->
                                                     <div class="card-body text-center">
                                                         <p class="mb-0">
                                                             {{ $documentNames[$document->id] ?? $document->name }}
@@ -114,7 +114,7 @@
                                                     </div>
                                                     <div class="card-footer text-center">
                                                         <a href="{{ asset('storage/' . $document->pivot->path) }}" target="_blank" class="btn btn-primary btn-sm">
-                                                            Afficher
+                                                            عرض
                                                         </a>
                                                     </div>
                                                 </div>
@@ -123,7 +123,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <!-- Fin de l'aperçu -->
+                            <!-- نهاية المعاينة -->
 
                             <!-- Formulaire pour valider les documents -->
                             <form id="validate-documents-form" action="{{ route('certificat.validate.documents', $certificat->id) }}" method="POST">

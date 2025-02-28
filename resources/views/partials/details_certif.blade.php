@@ -62,12 +62,12 @@
                         @endforeach
                     </ul>
                     <div class="text-center mt-3">
-                        <button type="submit" class="btn btn-success">Emettre les documents</button>
+                        <button type="submit" class="btn btn-success">رفع الوثائق</button>
                     </div>
                 </form>
                 <div class="card-body">
                     @php
-                        // Définir la correspondance entre l'ID du document et son nom affiché
+                        // تعريف أسماء الوثائق حسب المعرف
                         $documentNames = [
                             1 => 'بطاقة إرشادات',
                             2 => 'بطاقة التعريف',
@@ -80,38 +80,41 @@
                         ];
                     @endphp
 
-                    <!-- Aperçu des documents déposés -->
+                    <!-- معاينة الوثائق المرفقة -->
                     <div class="uploaded-documents my-4">
-                        <h4 class="mt-4 alert alert-info text-center">Documents déposés :</h4>
+                        <h4 class="mt-4 alert alert-info text-center">الوثائق المرفقة:</h4>
                         <div class="row">
                             @foreach($certificat->documents as $document)
                                 @if(!empty($document->pivot->path))
                                     @php
                                         $extension = strtolower(pathinfo($document->pivot->path, PATHINFO_EXTENSION));
                                     @endphp
-                                    <!-- Utilisation de classes responsives : col-12 sur mobile, col-sm-6 sur tablette, col-md-3 sur bureau -->
+                                    
                                     <div class="col-6 col-sm-6 col-md-3 mb-3">
                                         <div class="card">
                                             @if(in_array($extension, ['jpg', 'jpeg', 'png', 'gif']))
                                                 <img src="{{ asset('storage/' . $document->pivot->path) }}" class="card-img-top img-fluid" style="height: 150px; object-fit: cover;" alt="{{ $document->name }}">
                                             @elseif($extension == 'pdf')
-                                                <img src="{{ asset('assetslogin/images/pdf.png') }}" class="card-img-top img-fluid" style="height: 150px; object-fit: contain;" alt="PDF Icon">
+                                                <img src="{{ asset('assetslogin/images/pdf.png') }}" class="card-img-top img-fluid" style="height: 150px; object-fit: contain;" alt="رمز PDF">
                                             @elseif(in_array($extension, ['doc', 'docx']))
-                                                <img src="{{ asset('assetslogin/images/word.png') }}" class="card-img-top img-fluid" style="height: 150px; object-fit: contain;" alt="Word Icon">
+                                                <img src="{{ asset('assetslogin/images/word.png') }}" class="card-img-top img-fluid" style="height: 150px; object-fit: contain;" alt="رمز Word">
                                             @else
                                                 <div class="card-body text-center">
                                                     <i class="fas fa-file fa-3x"></i>
                                                 </div>
                                             @endif
-                                            <!-- Affichage du nom du document sous l'image -->
+                                            
+                                            <!-- اسم الوثيقة -->
                                             <div class="card-body text-center p-2">
                                                 <p class="mb-0 small">
                                                     {{ $documentNames[$document->id] ?? $document->name }}
                                                 </p>
                                             </div>
+                                            
+                                            <!-- زر المعاينة -->
                                             <div class="card-footer text-center p-2">
                                                 <a href="{{ asset('storage/' . $document->pivot->path) }}" target="_blank" class="btn btn-primary btn-sm">
-                                                    Afficher
+                                                    عرض
                                                 </a>
                                             </div>
                                         </div>
