@@ -22,16 +22,15 @@
 @push('content')
 
 <div class="container my-5" dir="rtl">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <div class="container">
-        <h2 class="text-center mb-4">طلبات التكوين</h2>
+    <h1 class="mt-4 alert alert-info text-center "> طلبات التكوين  </h1>
+
 
         @if(!($demandes->isEmpty()))
         
             @foreach($demandes as $demande)
-            <div class="certificat-card shadow-sm p-4 mb-3 bg-white rounded {{ $loop->first ? 'active' : '' }}"
-                     onclick="loadCertificatDetails({{ $demande->id }})"
-                     data-id="{{ $demande->id }}">
                 @php
                     // Retrieve associated records using the stored IDs
                     $gouvernorat = Governorate::find($demande->gouvernerat);
@@ -39,7 +38,9 @@
                     $formation    = Formation::find($demande->formation_id);
                 @endphp
 
-                
+                <a href="{{ route('formation.details', $demande->id) }}" 
+                   class="certificat-card shadow-sm p-4 mb-3 bg-white rounded" 
+                   data-id="{{ $demande->id }}">
                     <div class="card-body">
                         <!-- Instead of showing id_user, we use the content from associated tables -->
                         <p><strong>رقم الملف:</strong> {{ $demande->id }}</p>
@@ -48,8 +49,8 @@
                         <p><strong>اسم التكوين:</strong> {{ $formation ? $formation->name : 'غير محدد' }}</p>
                         <p><strong>الحالة:</strong> <span class="fw-bold">{{ $statuts[$demande->status] ?? 'غير محدد' }}</span></p>
                     </div>
-                
-            </div>
+                </a>
+            
             @endforeach
     </div>
 
@@ -108,26 +109,6 @@
         var container = document.getElementById('demande-form-container-certt');
         container.style.display = (container.style.display === 'none' || container.style.display === '') ? 'block' : 'none';
     });
-
-    function loadCertificatDetails(id) {
-        // Affiche un loader pendant le chargement
-        const container = document.getElementById('certificat-details-container');
-        container.innerHTML = '<div class="text-center py-4">جاري التحميل...</div>';
-
-        fetch(`/demandes/${id}/details`)
-            .then(response => response.text())
-            .then(html => {
-                container.innerHTML = html;
-                // Met à jour la classe active
-                document.querySelectorAll('.certificat-card').forEach(card => {
-                    card.classList.remove('active');
-                });
-                document.querySelector(`[data-id="${id}"]`).classList.add('active');
-            })
-            .catch(error => {
-                container.innerHTML = '<div class="alert alert-danger">حدث خطأ أثناء التحميل</div>';
-            });
-    }
 
 </script>
 @endpush
@@ -198,10 +179,6 @@
         background-color: #fff;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         direction: rtl;
-        text-align: center;
-    }
-    #demande-certificat h2 {
-        margin-bottom: 20px;
         text-align: center;
     }
     /* Formulaire en arabe */

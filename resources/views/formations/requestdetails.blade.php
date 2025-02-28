@@ -27,15 +27,14 @@
 @endphp
 
 @push('content')
-<div class="container py-5" dir="rtl">
-    <a href="{{ url()->previous() }}" class="btn btn-secondary mb-4">
-        <i class="fas fa-arrow-right me-2"></i> العودة
-    </a>
-    <h2 class="mb-4 text-center">تفاصيل طلبات التكوين - {{ $formation->name }}</h2>
+
+<div class="container" dir="rtl">
+    <h2 class="mt-4 alert alert-info text-center"> تفاصيل طلبات التكوين:</h2>
+    <h3 class="mt-4 alert alert-info text-center"> {{ $formation->name }}</h3>
 
     <div class="mb-4 d-flex gap-2">
         <button id="creerFormationBtn" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i> إنشاء التكوين
+            <i class="fas fa-plus me-1">  برمجة دورة تكوينية  </i> 
         </button>
     </div>
 
@@ -80,7 +79,7 @@
 
     <!-- Section des demandes traitées -->
     <div class="mb-5 border-bottom pb-4">
-        <h2 class="mb-4 text-center">الطلبات المعالجة</h4>
+        <h2 class="mt-4  alert-info text-center">الطلبات المعالجة</h2>
         
         <!-- Nouveaux boutons -->
         <div class="mb-3 d-flex gap-2">
@@ -133,7 +132,7 @@
             </table>
         </div>
         @else
-        <div class="alert alert-info">لا توجد طلبات معالجة حالياً</div>
+        <div class="mt-4 alert alert-info text-center">لا توجد طلبات معالجة حالياً</div>
         @endif
     </div>
 </div>

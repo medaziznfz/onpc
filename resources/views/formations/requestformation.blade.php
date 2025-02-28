@@ -28,7 +28,7 @@
 
 @push('content')
 <div class="container py-5" dir="rtl">
-    <h1 class="mb-4 text-center">إدارة طلبات التكوين</h1>
+    <h1 class="mt-4 alert alert-info text-center"> إدارة طلبات التكوين </h1>
     
     <div class="row">
         @foreach($formations as $formation)
