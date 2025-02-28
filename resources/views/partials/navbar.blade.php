@@ -1,16 +1,29 @@
+<style>
+  .grade-container {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+</style>
+
 <div class="horizontal-menu">
   <!-- Top Navbar -->
   <nav class="navbar top-navbar">
     <div class="container">
       <div class="navbar-content d-flex justify-content-between align-items-center">
         <!-- Left Section: Brand -->
-        <a href="#" class="navbar-brand">
-          ح.م<span>.د.و</span>
+        <div class="d-flex align-items-center">
+        <a href="/">
+          <img src="{{ asset('assetslogin\images\logo.png') }}" alt="Grade Image" style="max-width: 28px; max-height: 28px;">
         </a>
+          <a href="/" class="navbar-brand d-none d-md-block">
+            <span>خدمات الحماية المدنية على الخط</span>
+          </a>
+        </div>
 
         <!-- Center Section: Grade Display -->
         @if(Auth::check() && (Auth::user()->role == 1 || Auth::user()->role == 2))
-          <div class="d-flex justify-content-center flex-grow-1">
+          <div class="grade-container d-flex justify-content-center flex-grow-1">
             @if(Auth::user()->grade)
               <div class="grade-display p-2 px-4 d-flex align-items-center flex-wrap" style=" 
                 @if(Auth::user()->role == 1)
@@ -19,9 +32,9 @@
                   background-color:rgb(255, 133, 133);
                 @endif
                 border-radius: 4px;
-                max-width: fit-content; /* Ensure the width fits the content */
-                height: fit-content; /* Ensure the height fits the content */
-                gap: 18px; /* Add space between the image and text */
+                max-width: fit-content;
+                height: fit-content;
+                gap: 18px;
               ">
                 <!-- Grade image: smaller and not rounded -->
                 <img src="{{ asset(Auth::user()->grade->image_path) }}" alt="Grade Image" style="max-width: 28px; max-height: 28px;">
@@ -37,14 +50,12 @@
           </div>
         @endif
 
-
-
         <!-- Right Section: Notifications & Profile -->
         <div class="d-flex align-items-center">
           <ul class="navbar-nav">
             <!-- Notification Dropdown -->
             <li class="nav-item dropdown">
-                @include('partials.notifications')
+              @include('partials.notifications')
             </li>
             <!-- Profile Dropdown -->
             <li class="nav-item dropdown">
@@ -59,7 +70,7 @@
                   <div class="text-center">
                     <p class="tx-16 fw-bolder">{{ Auth::user()->name }}</p>
                     @if(Auth::user()->role == 1)
-                    <p class="tx-12 text-muted">{{ Auth::user()->governorate ? Auth::user()->governorate->name : '' }}</p>
+                      <p class="tx-12 text-muted">{{ Auth::user()->governorate ? Auth::user()->governorate->name : '' }}</p>
                     @endif
                     <p class="tx-12 text-muted">{{ Auth::user()->email }}</p>
                     <p class="tx-12 text-muted">{{ Auth::user()->cin }}</p>
