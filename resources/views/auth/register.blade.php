@@ -97,7 +97,7 @@
                                     <!-- CIN -->
                                     <div class="mb-3">
                                         <label for="cin" class="form-label text-end">رقم الهوية <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control @error('cin') is-invalid @enderror" 
+                                        <input type="text" class="form-control @error('cin') is-invalid @enderror" 
                                             id="cin" name="cin" placeholder="دخل رقم الهوية" 
                                             value="{{ old('cin') }}" required dir="rtl">
                                         @error('cin')
