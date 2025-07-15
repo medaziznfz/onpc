@@ -30,8 +30,10 @@ class NotificationController extends Controller
     public function index()
     {
         $notifications = Auth::user()->notifications()->paginate(10);
-        return view('notifications.index', compact('notifications'));
+        dd($notifications);  // Debugging line
+        return view('notifications.index', compact('notifications'));  // This line is correct
     }
+
 
     
 }
